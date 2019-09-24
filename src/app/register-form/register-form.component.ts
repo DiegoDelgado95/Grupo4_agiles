@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+//import { FormControl } from '@angular/forms';
+//import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'registerform',

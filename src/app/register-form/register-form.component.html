@@ -1,50 +1,81 @@
-<h1>Registro - Cuenta nueva</h1>
-<!--- <Form de datos personales> Nose porque cuando pongo el form no se muestra mas el componente, nose que es lo que falta --->
-	<label>N° Afiliado: </label>
-	<input type="number" name="number">
-	<br />
-	<label>Apellido: </label>
-	<input type="text" name="ape">
-	<br />
-	<label>Nombre: </label>
-	<input type="text" name="name">
-	<br />
-	<label>Tipo de afiliado: </label> 
-		<select>
-				<option value="1">Obligatorio</option>
-				<option value="2">Voluntario</option>
-		</select>
-	<br />
-	<label>Telefono: </label>
-	<input type="number" name="phone">
-	<br />
-	<label>Ciudad</label>
-	<input type="text" name="ciudad">
-	<br />
-	<label>Direccion: </label>
-	<input type="text" name="dire">
-	<br />
-	<label>Estado civil: </label> 
-		<select>
-				<option value="Casado">Casado/a</option>
-				<option value="Soltero">Soltero/a</option>
-				<option value="Pareja">En pareja</option>
-		</select>
-	<br />
-	<label>Ingrese los numeros de los afiliados a cargo que disponga separados por coma. </label>
-	<input type="text" name="afiliados">
-	<br />
-
-<!--- </Form> --->
-
-<!--- <Form de datos de cuenta> --->
-	<label>Correo electronico: </label>
-	<input type="email" name="email">
-	<br />
-	<label>Contraseña </label>
-	<input type="password" name="pass1">
-	<br />
-	<label>Repetir contraseña </label>
-	<input type="password" name="pass2">
-	<br />
-<!--- </Form> --->
+<div class="col-md-6 offset-md-3">
+<div class="card">
+	<div class="card-header"><h3>
+		Registro Usuario
+	</h3></div>
+	<form class="card-body">
+<!------ DATOS PERSONALES --------------------------->
+		<h5>Datos Personales</h5>
+		<br />
+		<div class="d-flex">
+			<div class="form-group pr-4">
+				<label>Nombre: </label>
+				<input type="text" name="name" class="form-control"> 
+			</div>
+			<div class="form-group">
+				<label>Apellido: </label>
+				<input type="text" name="ape" class="form-control">
+			</div>
+		</div>
+		<div class="d-flex"> 
+			<div class="form-group pr-4">
+				<label>Ciudad: </label>
+				<input type="text" name="ciudad" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>Direccion: </label>
+				<input type="text" name="dire" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+				<label>Telefono: </label>
+				<input type="text" name="phone" class="form-control col-6">
+		</div>
+		
+		<div class="form-group ">
+				<label>Estado civil: </label> 
+				<select class="form-control col-4">
+						<option value="Casado">Casado/a</option>
+						<option value="Soltero">Soltero/a</option>
+						<option value="Pareja">En pareja</option>
+				</select>
+		</div>
+<!------ DATOS OBRA SOCIAL --------------------->
+		<h5>Obra Social</h5>
+		<br />
+		<div class="d-flex">
+			<div class="form-group pr-4">
+				<label>N° Afiliado: </label>
+				<input type="number" name="number" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>Tipo de afiliado:</label> 
+				<select class="form-control">
+					<option value="1">Obligatorio</option>
+					<option value="2">Voluntario</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label>Ingrese los numeros de los afiliados a cargo que disponga separados por coma. </label>
+			<input type="text" name="afiliados" class="form-control">
+		</div>
+<!-- DATOS DE CUENTA -->
+		<h5>Cuenta</h5>
+		<br />
+		<div class="form-group">
+				<label>Correo electronico: </label>
+				<input type="email" name="email" class="form-control">
+		</div>
+		<div class="form-group">
+				<label>Contraseña </label>
+				<input type="password" name="pass1" class="form-control">
+		</div>
+		<div class="form-group">
+				<label>Repetir contraseña </label>
+				<input type="password" name="pass2" class="form-control">
+		</div>
+	</form>
+</div>
+</div>
