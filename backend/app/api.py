@@ -51,7 +51,7 @@ def new_user():
         return {"message": "No input data provided"}, 400
     # Validate and deserialize input
     try:
-        data = orden_schema.load(json_data)
+        data = user_schema.load(json_data)
     except ValidationError as err:
         return err.messages, 422
     first_name, last_name = data["user"]["first_name"], data["user"]["last_name"]
