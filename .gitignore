@@ -45,5 +45,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-./backend/agiles/
-./backend/__pycache__/*
+/backend/agiles/
+/backend/__pycache__/
+.vscode/
