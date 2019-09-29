@@ -7,13 +7,15 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/home/home.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterFormComponent,
     NavigationComponent,
-    HomeComponent
+    HomeComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
