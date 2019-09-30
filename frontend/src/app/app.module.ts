@@ -8,7 +8,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
-import { OrderFormComponent } from './order-form/order-form.component';
+import { OrderFormComponent } from './components/order-form/order-form.component';
 
 @NgModule({
   declarations: [
