@@ -8,6 +8,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
+import { UserService } from './services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,10 @@ import { LoginFormComponent } from './components/login-form/login-form.component
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

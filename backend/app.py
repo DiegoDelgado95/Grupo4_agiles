@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields, post_load, ValidationError
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
@@ -116,14 +118,14 @@ ordenes_schema = OrdenSchema(many=True)
 def ping():
     return "Pong!"
 
-@app.route("/users")
+@app.route("/api/users")
 def get_users():
     users = User.query.all()
     # Serialize the queryset
     result = users_schema.dump(users)
     return {"users": result}
 
-@app.route("/users/<int:pk>")
+@app.route("/api/users/<int:pk>")
 def get_user(pk):
     try:
         user = User.query.get(pk)
@@ -133,18 +135,35 @@ def get_user(pk):
 #    ordenes_result = ordenes_schema.dump(user.ordenes.all())
     return jsonify({"user": user_result})
 
-@app.route('/users', methods=['POST'])
+@app.route('/api/users', methods=['POST'])
 def add_user():
-        first_name = request.json['first_name']
-        last_name = request.json['last_name']
-        username = request.json['username']
+    email = request.json['email']
+    first_name = request.json['first_name']
+    last_name = request.json['last_name']
+    username = request.json['username']
+    password = request.json['password']
+    nro_afiliado = request.json['nro_afiliado']
+    telefono = request.json['telefono']
+    ciudad = request.json['ciudad']
+    estado_civil = request.json['estado_civil']
+    direccion = request.json['direccion']
 
-        new_user = User(first_name=first_name, last_name=last_name, username=username)
 
-        db.session.add(new_user)
-        db.session.commit()
+    new_user = User(email=email,
+                    first_name=first_name,
+                    last_name=last_name, 
+                    username=username, 
+                    password=password, 
+                    nro_afiliado=nro_afiliado,
+                    telefono=telefono,
+                    ciudad=ciudad,
+                    estado_civil=estado_civil,
+                    direccion=direccion)
 
-        return user_schema.jsonify(new_user)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return user_schema.jsonify(new_user)
 
 
 if __name__ == "__main__":

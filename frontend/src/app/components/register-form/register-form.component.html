@@ -10,31 +10,31 @@
 		<div class="d-flex">
 			<div class="form-group pr-4">
 				<label>Nombre: </label>
-				<input type="text" name="name" class="form-control"> 
+				<input [(ngModel)]="user.first_name" type="text" [ngModelOptions]="{standalone: true}" class="form-control"> 
 			</div>
 			<div class="form-group">
 				<label>Apellido: </label>
-				<input type="text" name="ape" class="form-control">
+				<input [(ngModel)]="user.last_name" type="text" [ngModelOptions]="{standalone: true}" class="form-control">
 			</div>
 		</div>
 		<div class="d-flex"> 
 			<div class="form-group pr-4">
 				<label>Ciudad: </label>
-				<input type="text" name="ciudad" class="form-control">
+				<input [(ngModel)]="user.ciudad" type="text" [ngModelOptions]="{standalone: true}" class="form-control">
 			</div>
 			<div class="form-group">
 				<label>Direccion: </label>
-				<input type="text" name="dire" class="form-control">
+				<input [(ngModel)]="user.direccion" type="text" [ngModelOptions]="{standalone: true}" class="form-control">
 			</div>
 		</div>
 		<div class="form-group">
 				<label>Telefono: </label>
-				<input type="text" name="phone" class="form-control col-6">
+				<input [(ngModel)]="user.telefono" type="text" [ngModelOptions]="{standalone: true}" class="form-control col-6">
 		</div>
 		
 		<div class="form-group ">
 				<label>Estado civil: </label> 
-				<select class="form-control col-4">
+				<select [(ngModel)]="user.estado_civil" [ngModelOptions]="{standalone: true}" class="form-control col-4">
 						<option value="Casado">Casado/a</option>
 						<option value="Soltero">Soltero/a</option>
 						<option value="Pareja">En pareja</option>
@@ -46,7 +46,7 @@
 		<div class="d-flex">
 			<div class="form-group pr-4">
 				<label>N° Afiliado: </label>
-				<input type="number" name="number" class="form-control">
+				<input [(ngModel)]="user.nro_afiliado" type="number" [ngModelOptions]="{standalone: true}" class="form-control">
 			</div>
 			<div class="form-group">
 				<label>Tipo de afiliado:</label> 
@@ -59,25 +59,25 @@
 		
 		<div class="form-group">
 			<label>Ingrese los numeros de los afiliados a cargo que disponga separados por coma. </label>
-			<input type="text" name="afiliados" class="form-control">
+			<input type="text"class="form-control">
 		</div>
 <!-- DATOS DE CUENTA -->
 		<h5>Cuenta</h5>
 		<br />
 		<div class="form-group">
 				<label>Correo electronico: </label>
-				<input type="email" name="email" class="form-control">
+				<input [(ngModel)]="user.email" type="email" [ngModelOptions]="{standalone: true}" class="form-control">
 		</div>
 		<div class="form-group">
-				<label>Contraseña </label>
-				<input type="password" name="pass1" class="form-control">
+				<label>Contraseña: </label>
+				<input [(ngModel)]="user.password" type="password" [ngModelOptions]="{standalone: true}" class="form-control">
 		</div>
 		<div class="form-group">
-				<label>Repetir contraseña </label>
-				<input type="password" name="pass2" class="form-control">
+				<label>Repetir contraseña: </label>
+				<input type="password" class="form-control">
 		</div>
 		<div>
-			<input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">
+			<input class="btn btn-primary btn-lg btn-block" (click)="saveNewUser()" type="submit" value="Submit">
 		</div>
 	</form>
 </div>
