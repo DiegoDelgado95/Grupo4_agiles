@@ -10,6 +10,8 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { OrderFormComponent } from './components/order-form/order-form.component';
+import { VerOrdenComponent } from './components/ver-orden/ver-orden.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterFormComponent,
     NavigationComponent,
     HomeComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    OrderFormComponent,
+    VerOrdenComponent
   ],
   imports: [
     BrowserModule,
