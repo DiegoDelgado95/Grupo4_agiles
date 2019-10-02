@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VerOrdenComponent } from './ver-orden.component';
+import { VerOrdenComponent } from "./ver-orden.component";
 
 describe('VerOrdenComponent', () => {
   let component: VerOrdenComponent;
