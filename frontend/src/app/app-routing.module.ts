@@ -4,7 +4,6 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { OrderFormComponent } from './components/order-form/order-form.component';
-import { VerOrdenComponent } from './components/ver-orden/ver-orden.component';
 
 const routes: Routes = [
   { path: '',
@@ -26,10 +25,6 @@ const routes: Routes = [
   {
     path: 'order',
     component: OrderFormComponent
-  },
-  {
-    path: 'ver_order',
-    component: VerOrdenComponent
   }
 ];
 
