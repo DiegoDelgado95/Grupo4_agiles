@@ -79,33 +79,41 @@
     </div> <!--cad body -->
   </div>
   <div>
-    <table id="dtBasicExample" class="table table-striped table-bordered table-sm well well-sm " cellspacing="0" width="100%">
-      <thead>
-        <tr>
-          <th class="th-sm">Fecha
-          </th>
-          <th class="th-sm">Tipo
-          </th>
-          <th class="th-sm">Estado
-          </th>
-          <th class="th-sm ">Orden Adjunta <span class="glyphicon glyphicon-paperclip"></span>
-          </th>
-          <th class="th-sm">Más
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <th scope="row"></th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-          <button type="button" class="btn btn-indigo btn-sm m-0">Ver Más</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+      <div *ngIf="test else loading">
+        <table  id="dtBasicExample" class="table table-striped table-bordered table-sm well well-sm " cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th class="th-sm">Fecha
+              </th>
+              <th class="th-sm">Tipo
+              </th>
+              <th class="th-sm">Estado
+              </th>
+              <th class="th-sm ">Orden Adjunta <span class="glyphicon glyphicon-paperclip"></span>
+              </th>
+              <th class="th-sm">Más
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orders">
+            <th scope="row"></th>
+            <td>{{ order.fecha }}</td>
+            <td>{{ order.tipo }}</td>
+            <td>{{ order.estado}}</td>
+            <td>
+              <button type="button" class="btn btn-indigo btn-sm m-0">Ver Más</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+    </div>
+    <ng-template #loading>
+      <div class="text-center">
+        <h2>No tiene ninguna order cargada</h2>
+        <br/>
+      </div>
+    </ng-template>
   </div>
 </body>
 </html>
