@@ -11,6 +11,8 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { OrderFormComponent } from './components/order-form/order-form.component';
+import { VerOrdenComponent } from './components/ver-orden/ver-orden.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -19,14 +21,16 @@ import { OrderFormComponent } from './components/order-form/order-form.component
     NavigationComponent,
     HomeComponent,
     LoginFormComponent,
-    OrderFormComponent
+    OrderFormComponent,
+    VerOrdenComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
