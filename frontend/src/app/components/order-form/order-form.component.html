@@ -7,7 +7,7 @@
             <form action="#">
                 <div class="form-group">
                     <label>Tipo de orden:   </label>
-                    <select class="form-control">
+                    <select [(ngModel)]="order.tipo" [ngModelOptions]="{standalone: true}" class="form-control">
                         <option value="analisis">Analisis</option>
                         <option value="medicamento">Medicamento</option>
                         <option value="tratamiento">Tratamiento</option>
@@ -16,11 +16,11 @@
                 <div class="form-group">
                     <label>Adjuntar orden:   </label>
                     <br>
-                    <input type="file" class="">
+                    <input [(ngModel)]="order.data" [ngModelOptions]="{standalone: true}" type="file" class="">
                 </div>
             </form>
             <div class="col text-center">
-                <button type="button" class="btn btn-lg btn-primary">Cargar orden</button>
+                <button type="button" class="btn btn-lg btn-primary"(click)="saveOrder()">Cargar orden</button>
             </div>
         </div>
     </div>

@@ -15,7 +15,6 @@ export class VerOrdenComponent implements OnInit {
 
   order:Order = {
     id: 0,
-    name: '',
     data: '',
     estado: '',
     tipo: '',
