@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'loginform',
@@ -7,9 +10,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+  user:User={
+    id:0,
+    email: '',
+    username: '',
+    first_name: '',
+    last_name: '',
+    password: '',
+    nro_afiliado:0,
+    telefono: '',
+    ciudad: '',
+    estado_civil: '',
+    direccion: '',
+    is_admin: '',
+  }
+
+
+  constructor(private userService: UserService, private route:Router, private activedRoute:ActivatedRoute) { }
 
   ngOnInit() {
   }
+
+
+  login(){
+    this.userService.getUser("1").subscribe(
+      res => {
+        this.user = res
+        console.log(res)
+        localStorage.setItem("user", JSON.stringify(this.user))
+      },
+      err => console.error(err)
+    )
+  }
+
 
 }

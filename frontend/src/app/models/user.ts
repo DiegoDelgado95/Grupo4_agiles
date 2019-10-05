@@ -10,4 +10,5 @@ export interface User {
     ciudad?: string;
     estado_civil?: string;
     direccion?: string;
+    is_admin?: string;
 }

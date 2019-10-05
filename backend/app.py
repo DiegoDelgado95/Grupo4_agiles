@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin3:password@localhost/flask_app"
 db = SQLAlchemy(app)
 CORS(app)
 ma = Marshmallow(app)
@@ -79,7 +79,7 @@ class Orden(db.Model):
     data = db.Column(db.LargeBinary)
     estado = db.Column(db.String(300), default='Pendiente')
     tipo = db.Column(db.String(300))
-#    user = db.Column(db.String(60), db.ForeignKey('usuarios.username'), nullable = False)
+#   user = db.Column(db.String(60), db.ForeignKey('usuarios.username'), nullable = False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
 ## USER SCHEMA ##
@@ -134,7 +134,7 @@ def get_user(pk):
         return jsonify({"message": "User could not be found."}), 400
     user_result = user_schema.dump(user)
 #    ordenes_result = ordenes_schema.dump(user.ordenes.all())
-    return jsonify({"user": user_result})
+    return jsonify(user_result)
 
 @app.route('/api/users', methods=['POST'])
 def add_user():
@@ -171,7 +171,7 @@ def get_ordenes():
     ordenes = Orden.query.all()
     # Serialize the queryset
     result = ordenes_schema.dump(ordenes)
-    return {"ordenes": result}    
+    return jsonify(result)   
 
 @app.route('/api/order', methods=['POST'])
 def add_order():
