@@ -2,3 +2,4 @@
 backend/__pycache__/
 backend/agiles/
 backend/.vscode/
+backend/migrations/

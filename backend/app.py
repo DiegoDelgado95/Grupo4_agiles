@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate, MigrateCommand
 from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin3:password@localhost/flask_app"
@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 CORS(app)
 ma = Marshmallow(app)
 login_manager = LoginManager()
+migrate = Migrate(app, db)
 
 migrate = Migrate(app, db)
 
@@ -32,7 +33,7 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(60), index=True)
     last_name = db.Column(db.String(60), index=True)
     password_hash = db.Column(db.String(128))
-    orden = db.relationship('Orden', backref='usuarios',cascade = 'all, delete-orphan', lazy = 'dynamic')
+#    orden = db.relationship('Orden', backref='usuarios',cascade = 'all, delete-orphan', lazy = 'dynamic')
     nro_afiliado = db.Column(db.Integer, index=True, unique=True)
     is_admin = db.Column(db.Boolean, default=False)
     telefono = db.Column(db.String(60), index=True)
@@ -81,7 +82,7 @@ class Orden(db.Model):
     data = db.Column(db.LargeBinary)
     estado = db.Column(db.String(300), default='Pendiente')
     tipo = db.Column(db.String(300))
-    user = db.Column(db.String(60), db.ForeignKey('usuarios.username'), nullable = False)
+#    user = db.Column(db.String(60), db.ForeignKey('usuarios.username'), nullable = False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
 ## USER SCHEMA ##
@@ -99,7 +100,7 @@ users_schema = UserSchema(many=True)
 ## ORDEN SCHEMA ##
 class OrdenSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'data', 'estado', 'tipo', 'user', 'fecha')
+        fields = ('id', 'name', 'data', 'estado', 'tipo', 'fecha')
 
     @post_load
     def make_order(self, data, **kwargs):
@@ -168,7 +169,25 @@ def add_user():
 
     return user_schema.jsonify(new_user)
 
+@app.route("/api/order")
+def get_ordenes():
+    ordenes = Orden.query.all()
+    # Serialize the queryset
+    result = ordenes_schema.dump(ordenes)
+    return {"ordenes": result}    
+
+@app.route('/api/order', methods=['POST'])
+def add_order():
+    tipo = request.json['tipo']
+
+    new_orden = Orden(tipo=tipo)
+
+    db.session.add(new_orden)
+    db.session.commit()
+
+    return orden_schema.jsonify(new_orden)
+
 
 if __name__ == "__main__":
     db.create_all()
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5000)

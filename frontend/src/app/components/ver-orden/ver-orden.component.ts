@@ -15,7 +15,6 @@ export class VerOrdenComponent implements OnInit {
 
   order:Order = {
     id: 0,
-    name: '',
     data: '',
     estado: '',
     tipo: '',
@@ -26,7 +25,7 @@ export class VerOrdenComponent implements OnInit {
   constructor(private orderService: OrderService, private router:Router, private activedRoute:ActivatedRoute) { }
 
   ngOnInit() {
-    //this.getOrders();
+    this.getOrders();
   }
 
 
