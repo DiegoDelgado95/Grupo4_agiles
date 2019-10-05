@@ -4,16 +4,19 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields, post_load, ValidationError
 from flask_cors import CORS
+from flask_migrate import Migrate, MigrateCommand
 from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin3:password@localhost/flask_app"
 db = SQLAlchemy(app)
 CORS(app)
 ma = Marshmallow(app)
 login_manager = LoginManager()
+
+migrate = Migrate(app, db)
 
 ## MODEL - TABLA USUARIOS ##
 class User(UserMixin, db.Model):
