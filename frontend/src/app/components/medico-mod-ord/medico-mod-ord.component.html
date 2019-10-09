@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" > 
+  <script type="text/javascript">
+    $(document).ready(function(){
+      /*  
+      $('#divMiCalendario').datetimepicker({
+         format: 'YYYY-MM-DD '       <!-- HH:mm -->
+      });
+      $('#divMiCalendario').data("DateTimePicker").show();  
+      */
+      $('#datetimepicker1').datetimepicker({
+       format: 'DD-MM-YY'
+      });
+      $('#datetimepicker2').datetimepicker({
+       format: 'DD-MM-YY'
+      }); 
+    }); 
+  </script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="card-header">
+      <h3>Ver Ordenes Medico</h3>
+    </div>
+    <div class="card-body">
+      <div class="well well-lg">
+        <form class="form-inline" role="form">
+          <legend class="text-center">Filtros</legend>
+          <div class="d-flex">
+            <label>Tipo de orden :</label>
+            <div class="form-group pr-4">
+              <select class="form-control">
+                <option value="analisis">Analisis</option>
+                <option value="medicamento">Medicamento</option>
+                <option value="tratamiento">Tratamiento</option>
+              </select>
+            </div>
+            <label>Estado: </label>
+            <div class="form-group pr-4"> 
+              <select  class="form-control">
+                <option value="pendiente">Pendiente</option>
+                <option value="aceptada">Aceptada</option>
+                <option value="rechazada">Rechazada</option>
+              </select>
+	            </div>
+	            
+            <label>      Afiliado: </label>
+            <div class="form-group pr-4"> 
+              <input type='text' class="form-control" id='' placeholder='Ingrese Afiliado' >
+            </div>
+             </div>
+             <br>
+
+          <div class="d-flex">
+            <label>Fecha: </label>
+            <div class= "form-group pr-4">
+              <div class="input-group date " id='datetimepicker1' >
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                <input type='text' class="form-control" id='' placeholder='Select Date' >
+              </div>
+              <div class="input-group-addon input-group date ">to</div>
+        <!-- segunda fecha-->
+              <div class=" input-group date " id='datetimepicker2' >
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                <input type='text' class="form-control" id='datetimepicker2' placeholder='Select Date'  >
+              </div>
+            </div>
+          </div>
+        </form>
+        <br>
+        <button type="submit" class="btn btn-primary my-1 center-block  fas fa-star-christmas fa-spin " >Aplicar</button>
+      </div>
+    </div> <!--cad body -->
+  </div>
+
+<!-- Modal Aplicar -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="aplibtn">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Seguro de aplicar cambios? </h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
+        <button type="button" class="btn btn-primary" id="modal-btn-no" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Cerrar modal aplicar -->
+  <!-- Modal editar-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Orden Detalle</h4>
+        </div>
+        <div class="modal-body">
+          <p>Detalle Modal</p>
+          <div class="card-body">
+      <div class="well well-lg">
+        <form class="form-inline" role="form">
+          <legend class="text-center">Detalle Usuario</legend>
+            <label>Nombre y Apellido: </label>
+            <br>
+            <label>Número de Afiliado: </label>
+            <br>
+            <label>Tipo de Afiliado: </label>
+            <br>
+          <button type="button" class="btn btn-link">Ver más</button>
+          </form>
+          </div>
+       </div>   
+          <tr *ngFor="let order of orders">
+            <th scope="row"></th>
+            <td>{{ order.fecha }}</td>
+            <td>{{ order.tipo }}</td>
+            <td>{{ order.estado}}</td>
+            <td>
+            </tr>
+            <br>
+             <span class="glyphicon glyphicon-file"></span>
+
+            <br>
+            
+            <label>Estado: </label>
+            <div class="form-group pr-4"> 
+              <select  class="form-control">
+                <option value="pendiente">Pendiente</option>
+                <option value="aceptada">Aceptada</option>
+                <option value="rechazada">Rechazada</option>
+              </select>
+	            </div>
+	            <label>Cargo: </label>
+            <div class="form-group pr-4"> 
+              <select  class="form-control">
+                <option value="pendiente">-</option>
+                <option value="aceptada">Sin Cargo</option>
+                <option value="rechazada">Con Cargo</option>
+              </select>
+	            </div>
+	            <label>Detalle: </label>
+	            <div class="md-form mb-4 pink-textarea active-pink-textarea">
+  				<textarea id="form18" class="form-control" rows="3"></textarea>
+				</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default"  data-dismiss="modal" data-toggle="modal" data-target="#aplibtn">Aplicar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div> <!-- Cerrar modal -->
+      
+    </div>
+  </div>
+  
+</div>
+
+  <div>
+      <div *ngIf="test else loading">
+        <table  id="dtBasicExample" class="table table-striped table-bordered table-sm well well-sm " cellspacing="0" width="100%">
+          <thead>
+            <tr>
+            <th class="th-sm">Afiliado <span class="glyphicon glyphicon-user"></span>
+              </th>
+              <th class="th-sm">Fecha
+              </th>
+              <th class="th-sm">Tipo
+              </th>
+              <th class="th-sm">Estado
+              </th>
+              <th class="th-sm ">Orden Adjunta <span class="glyphicon glyphicon-paperclip"></span>
+              </th>
+              <th class="th-sm">Editar <span class="glyphicon glyphicon-pencil"></span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orders">
+            <th scope="row"></th>
+            <td>{{ order.fecha }}</td>
+            <td>{{ order.tipo }}</td>
+            <td>{{ order.estado}}</td>
+            <td>
+              <button type="button" class="btn btn-indigo btn-sm m-0">Ver Adjunto</button>
+            </td>
+            <td>
+            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">
+<span class="glyphicon glyphicon-pencil"></span>
+</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+    </div>
+    <ng-template #loading>
+      <div class="text-center">
+        <h2>No tiene ninguna order cargada</h2>
+        <br/>
+      </div>
+    </ng-template>
+  </div>
+</body>
+</html>
