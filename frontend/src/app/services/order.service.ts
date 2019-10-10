@@ -29,4 +29,12 @@ export class OrderService {
     return this.http.delete(`${this.API_URI}/order/${id}`);
   }
 
+  public postFileImagen(imagenParaSubir: File){
+
+		const formData = new FormData(); 
+		formData.append('imagenPropia', imagenParaSubir, imagenParaSubir.name); 
+		return this.http.post(this.API_URI, formData);
+
+	}
+
 }

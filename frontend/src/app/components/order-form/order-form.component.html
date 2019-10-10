@@ -18,6 +18,11 @@
                     <br>
                     <input [(ngModel)]="order.data" [ngModelOptions]="{standalone: true}" type="file" class="">
                 </div>
+                <div class="form-group">
+                    <label>Adjuntar orden PROBAR:   </label>
+                    <br>
+                    <input type="file" (change)="cargandoImagen($event.target.files)" multiple>
+                </div>
             </form>
             <div class="col text-center">
                 <button type="button" class="btn btn-lg btn-primary"(click)="saveOrder()" (click)="subirArchivo()">Cargar orden</button>

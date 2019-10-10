@@ -14,7 +14,7 @@ export class OrderFormComponent implements OnInit {
 
   order:Order = {
     id: 0,
-    data: null,
+    data: '',
     estado: '',
     user:'',
     tipo: '',
@@ -33,5 +33,39 @@ export class OrderFormComponent implements OnInit {
       err => console.error(err)
       )
     }
+
+
+    //Carga Imagen
+    public respuestaImagenEnviada;
+    public resultadoCarga;
+    public cargandoImagen(files: FileList){
+
+      this.orderService.postFileImagen(files[0]).subscribe(
+  
+        response => {
+          this.respuestaImagenEnviada = response; 
+          if(this.respuestaImagenEnviada <= 1){
+            console.log("Error en el servidor"); 
+          }else{
+  
+            if(this.respuestaImagenEnviada.code == 200 && this.respuestaImagenEnviada.status == "success"){
+  
+              this.resultadoCarga = 1;
+  
+            }else{
+              this.resultadoCarga = 2;
+            }
+  
+          }
+        },
+        error => {
+          console.log(<any>error);
+        }
+  
+      )
+  
+    }
+
+
 }
 
