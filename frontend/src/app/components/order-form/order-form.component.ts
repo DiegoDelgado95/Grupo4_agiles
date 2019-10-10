@@ -14,7 +14,7 @@ export class OrderFormComponent implements OnInit {
 
   order:Order = {
     id: 0,
-    data: '',
+    data: null,
     estado: '',
     user:'',
     tipo: '',

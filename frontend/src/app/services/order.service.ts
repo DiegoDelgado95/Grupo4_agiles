@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Order } from '../models/order';
 
 @Injectable({
@@ -9,7 +8,7 @@ import { Order } from '../models/order';
 export class OrderService {
 
   //Variable que contiene la base de la api
-  API_URI = 'http://localhost:5000/api'
+  public API_URI = 'http://localhost:5000/api';
 
   //Le paso la variable http
   constructor(private http: HttpClient) { }
@@ -29,5 +28,5 @@ export class OrderService {
   deleteOrder(id: string){
     return this.http.delete(`${this.API_URI}/order/${id}`);
   }
-  
+
 }
