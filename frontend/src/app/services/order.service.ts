@@ -33,7 +33,7 @@ export class OrderService {
 
 		const formData = new FormData(); 
 		formData.append('imagenPropia', imagenParaSubir, imagenParaSubir.name); 
-		return this.http.post(this.API_URI, formData);
+		return this.http.post(`${this.API_URI}/order`, formData);
 
 	}
 
