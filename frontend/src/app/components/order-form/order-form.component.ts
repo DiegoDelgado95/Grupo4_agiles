@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
 import { OrderService } from 'src/app/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'orderform',
@@ -20,7 +21,8 @@ export class OrderFormComponent implements OnInit {
     tipo: '',
     fecha: '',
   }
-  constructor(private orderService: OrderService, private router:Router, private activedRoute:ActivatedRoute) { }
+
+  constructor(private orderService: OrderService, private router:Router, private activedRoute:ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -33,39 +35,23 @@ export class OrderFormComponent implements OnInit {
       err => console.error(err)
       )
     }
+  
+  //Cargar imagen
+  selectedFile: File = null;
 
+  onFileSelected(event){
+    this.selectedFile = <File>event.target.files[0];
+  }
 
-    //Carga Imagen
-    public respuestaImagenEnviada;
-    public resultadoCarga;
-    public cargandoImagen(files: FileList){
-
-      this.orderService.postFileImagen(files[0]).subscribe(
+  subirArchivo(){
+    const fd = new FormData();
+    fd.append('image',this.selectedFile, this.selectedFile.name);
+    this.http.post('http://localhost:5000/api/img',fd)
+      .subscribe(res => {
+        console.log(res);         
+      });
+  }
   
-        response => {
-          this.respuestaImagenEnviada = response; 
-          if(this.respuestaImagenEnviada <= 1){
-            console.log("Error en el servidor"); 
-          }else{
-  
-            if(this.respuestaImagenEnviada.code == 200 && this.respuestaImagenEnviada.status == "success"){
-  
-              this.resultadoCarga = 1;
-  
-            }else{
-              this.resultadoCarga = 2;
-            }
-  
-          }
-        },
-        error => {
-          console.log(<any>error);
-        }
-  
-      )
-  
-    }
-
 
 }
 

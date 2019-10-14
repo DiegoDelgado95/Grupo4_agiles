@@ -13,15 +13,14 @@
                         <option value="tratamiento">Tratamiento</option>
                     </select>
                 </div>
-                <div class="form-group">
+ <!--                <div class="form-group">
                     <label>Adjuntar orden:   </label>
                     <br>
                     <input [(ngModel)]="order.data" [ngModelOptions]="{standalone: true}" type="file" class="">
                 </div>
-                <div class="form-group">
-                    <label>Adjuntar orden PROBAR:   </label>
-                    <br>
-                    <input type="file" (change)="cargandoImagen($event.target.files)" multiple>
+-->
+                <div class="form-group"> 
+                    <input type="file" (change)="onFileSelected($event)">
                 </div>
             </form>
             <div class="col text-center">

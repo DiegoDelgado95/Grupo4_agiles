@@ -7,9 +7,11 @@ from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
+import os
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
+app.config["IMAGE_UPLOADS"] = "/mnt/c/Users/garci/Desktop/Git/Imagenes"
 db = SQLAlchemy(app)
 CORS(app)
 ma = Marshmallow(app)
@@ -118,6 +120,13 @@ ordenes_schema = OrdenSchema(many=True)
 @app.route('/')
 def ping():
     return "Pong!"
+
+@app.route('/api/img', methods=['POST','GET'])
+def get_img():
+    if request.method == "POST":
+       if request.files:
+            image = request.files['image']        
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
 
 @app.route("/api/users")
 def get_users():
