@@ -19,6 +19,8 @@ export class UserService {
     return this.http.get(`${this.API_URI}/users`);
   }
 
+  //Debo mandar en la peticion el mail y pass, para que me traiga el user
+  //O crear otro router
   getUser(id: string){
     return this.http.get(`${this.API_URI}/users/${id}`);
   }
@@ -31,6 +33,10 @@ export class UserService {
     return this.http.delete(`${this.API_URI}/users/${id}`);
   }
 
+  getLogin(user: User){
+    return this.http.post(`${this.API_URI}/user/login`, user);
+  }
+  
   //Retorna un Obersable tipo Game, le indico que le id es tipo string o number
   //updateGame(id: string|number, updateGame: Game): Observable<Game> {
   // return this.http.put(`${this.API_URI}/games/${id}`, updateGame);

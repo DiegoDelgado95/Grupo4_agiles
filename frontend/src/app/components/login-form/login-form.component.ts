@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { timeout } from 'q';
 
 @Component({
   selector: 'loginform',
@@ -33,14 +34,19 @@ export class LoginFormComponent implements OnInit {
 
 
   login(){
-    this.userService.getUser("1").subscribe(
+    //Debo cambiar la peticion para pedir user por mail and password
+    this.userService.getLogin(this.user).subscribe(
       res => {
         this.user = res
         console.log(res)
-        localStorage.setItem("user", JSON.stringify(this.user))
+        localStorage.setItem("user", JSON.stringify(this.user[0]))
       },
       err => console.error(err)
     )
+   // this.route.navigate(["/"]);
+    setTimeout(function(){location.reload(),this.route.navigate(["/"]); }, 500);
+   // this.route.navigate(["/"]); 
+    //location.reload();
   }
 
 

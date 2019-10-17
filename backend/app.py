@@ -184,6 +184,12 @@ def add_order():
 
     return orden_schema.jsonify(new_orden)
 
+@app.route('/api/user/login', methods=['POST'])
+def login():
+    email = request.json['email']
+    password = request.json['password']
+    login = User.query.filter_by(email=email)
+    return users_schema.jsonify(login)
 
 if __name__ == "__main__":
     db.create_all()
