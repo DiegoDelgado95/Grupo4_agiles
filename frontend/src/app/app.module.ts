@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { OrderFormComponent } from './components/order-form/order-form.component';
 import { VerOrdenComponent } from './components/ver-orden/ver-orden.component';
 import { CommonModule } from '@angular/common';
+import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CommonModule } from '@angular/common';
     HomeComponent,
     LoginFormComponent,
     OrderFormComponent,
-    VerOrdenComponent
+    VerOrdenComponent,
+    MedicoModOrdComponent
   ],
   imports: [
     BrowserModule,
