@@ -197,7 +197,7 @@
             <td>{{ order.tipo }}</td>
             <td>{{ order.estado }}</td>
             <td>
-              <button type="button" class="btn btn-indigo btn-sm m-0">Ver Adjunto</button>
+              <a href="{{ order.data }}" class="btn btn-indigo btn-sm m-0">Ver Adjunto</a>
             </td>
             <td>
             <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" (click)="modOrder(order.id)">

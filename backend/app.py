@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/test"
 app.config["IMAGE_UPLOADS"] = "/var/www/img/"
 db = SQLAlchemy(app)
 CORS(app)
