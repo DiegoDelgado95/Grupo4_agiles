@@ -8,9 +8,7 @@ import { User } from 'src/app/models/user';
 })
 export class NavigationComponent implements OnInit {
 
-  ejemplo:Boolean=true;
   isMedico:string='false';
-  //isLogin:User;
   
 
   user:User={

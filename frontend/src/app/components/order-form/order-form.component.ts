@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
 import { OrderService } from 'src/app/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'orderform',
@@ -9,14 +10,14 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit {
-  test:Boolean=true;
+  user:User;
   orders:any=[];
 
   order:Order = {
     id: 0,
     data: '',
     estado: '',
-    user:'',
+    user_id:0,
     tipo: '',
     fecha: '',
   }
@@ -26,6 +27,8 @@ export class OrderFormComponent implements OnInit {
   }
 
   saveOrder(){
+    this.user = JSON.parse( localStorage.getItem("user"));
+    this.order.user_id = this.user.id;
     this.orderService.saveOrder(this.order).subscribe(
       res => {
         console.log(res);

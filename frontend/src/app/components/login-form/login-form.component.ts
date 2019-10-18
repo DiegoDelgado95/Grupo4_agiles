@@ -34,7 +34,6 @@ export class LoginFormComponent implements OnInit {
 
 
   login(){
-    //Debo cambiar la peticion para pedir user por mail and password
     this.userService.getLogin(this.user).subscribe(
       res => {
         this.user = res
@@ -43,10 +42,8 @@ export class LoginFormComponent implements OnInit {
       },
       err => console.error(err)
     )
-   // this.route.navigate(["/"]);
-    setTimeout(function(){location.reload(),this.route.navigate(["/"]); }, 500);
-   // this.route.navigate(["/"]); 
-    //location.reload();
+    setTimeout(function(){location.reload(),this.route.navigate(["/"]); }, 600);
+    this.route.navigate(["/"]);
   }
 
 

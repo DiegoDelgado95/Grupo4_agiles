@@ -98,7 +98,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="myModal" data-dismiss="modal" id="modal-btn-si">Si</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="myModal" data-dismiss="modal" id="modal-btn-si" (click)="editOrderMedico()">Si</button>
         <button type="button" class="btn btn-danger" id="modal-btn-no" data-dismiss="modal" data-toggle="modal" data-target="#myModal">No</button>
       </div>
     </div>
@@ -122,8 +122,8 @@
       <div class="well well-lg">
         <form role="form">
           <ul class="list-group">Detalle Usuario:</ul>
-            <li class="list-group-item">Nombre y Apellido: </li>
-            <li class="list-group-item">Número de Afiliado: </li>
+            <li class="list-group-item">Nombre y Apellido: {{ modalUser.first_name }}  {{ modalUser.last_name }}</li>
+            <li class="list-group-item">Número de Afiliado: {{ modalUser.nro_afiliado }} </li>
             <li class="list-group-item">Tipo de Afiliado: </li>
           <button type="button" class="btn btn-link">Ver más</button>
           </form>
@@ -143,7 +143,7 @@
             
             <label>Estado: </label>
             <div class="form-group pr-4"> 
-              <select  class="form-control">
+              <select  class="form-control" [(ngModel)]="modalOrder.estado" [ngModelOptions]="{standalone: true}">
                 <option value="pendiente">Pendiente</option>
                 <option value="aceptada">Aceptada</option>
                 <option value="rechazada">Rechazada</option>
@@ -151,15 +151,15 @@
 	            </div>
 	            <label>Cargo: </label>
             <div class="form-group pr-4"> 
-              <select  class="form-control">
-                <option value="pendiente">-</option>
-                <option value="aceptada">Sin Cargo</option>
-                <option value="rechazada">Con Cargo</option>
+              <select  class="form-control" [(ngModel)]="modalOrder.descuento" [ngModelOptions]="{standalone: true}">
+                <option value="">-</option>
+                <option value="Sin Cargo">Sin Cargo</option>
+                <option value="Con Cargo">Con Cargo</option>
               </select>
 	            </div>
 	            <label>Detalle: </label>
 	            <div class="md-form mb-4 pink-textarea active-pink-textarea">
-  				<textarea id="form18" class="form-control" rows="3"></textarea>
+  				<textarea id="form18" class="form-control" rows="3" [(ngModel)]="modalOrder.observacion" [ngModelOptions]="{standalone: true}"></textarea>
 				</div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary"  data-dismiss="modal" data-toggle="modal" data-target="#aplibtn">Aplicar</button>
@@ -191,21 +191,18 @@
             </tr>
           </thead>
           <tbody>
-          <tr>
-            <th scope="row"></th>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr *ngFor="let order of orders">
+            <th scope="row">{{ order.user_id }}</th>
+            <td>{{ order.fecha }}</td>
+            <td>{{ order.tipo }}</td>
+            <td>{{ order.estado }}</td>
             <td>
               <button type="button" class="btn btn-indigo btn-sm m-0">Ver Adjunto</button>
             </td>
             <td>
-            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">
-<span class="glyphicon glyphicon-pencil"></span>
-</button>
-
-    
-
+            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" (click)="modOrder(order.id)">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
             </td>
           </tr>
           </tbody>

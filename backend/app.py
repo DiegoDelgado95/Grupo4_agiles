@@ -74,13 +74,18 @@ class Orden(db.Model):
 
     __tablename__ = 'ordenes'
 
+    #Datos de la Orden
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(300))
     data = db.Column(db.LargeBinary)
     estado = db.Column(db.String(300), default='Pendiente')
     tipo = db.Column(db.String(300))
-#   user = db.Column(db.String(60), db.ForeignKey('usuarios.username'), nullable = False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    #Paciente
+    user_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
+    #Medico
+    medico_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=True)
+    observacion = db.Column(db.String(300))
+    descuento = db.Column(db.String(60))
 
 ## USER SCHEMA ##
 class UserSchema(ma.Schema):
@@ -97,7 +102,7 @@ users_schema = UserSchema(many=True)
 ## ORDEN SCHEMA ##
 class OrdenSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'data', 'estado', 'tipo', 'fecha')
+        fields = ('id', 'data', 'estado', 'tipo', 'fecha', 'user_id', 'medico_id', 'observacion', 'descuento')
 
     @post_load
     def make_order(self, data, **kwargs):
@@ -166,24 +171,77 @@ def add_user():
 
     return user_schema.jsonify(new_user)
 
+
+
+#Obtener todas la ordenes
 @app.route("/api/order")
 def get_ordenes():
     ordenes = Orden.query.all()
     # Serialize the queryset
     result = ordenes_schema.dump(ordenes)
-    return jsonify(result)   
+    return jsonify(result)
 
+
+
+#Obtener todas las ordenes de un usuario
+@app.route("/api/orders/<int:pk>", methods=['GET'])
+def get_ordenes_user(pk):
+    ordenes = Orden.query.filter_by(user_id=pk)
+    result = ordenes_schema.dump(ordenes)
+    return jsonify(result)      
+
+
+
+#Crear una nueva Orden, del user
 @app.route('/api/order', methods=['POST'])
 def add_order():
+    
+    #Datos del form order user
     tipo = request.json['tipo']
+    user_id = request.json['user_id']
 
-    new_orden = Orden(tipo=tipo)
+    new_orden = Orden(tipo=tipo, user_id=user_id)
 
     db.session.add(new_orden)
     db.session.commit()
 
     return orden_schema.jsonify(new_orden)
 
+
+#Edit de orden departe del medico
+@app.route('/api/order', methods=['PUT'])
+def update_order():
+
+    #Datos de la orden
+    id = request.json['id']
+    estado = request.json['estado']
+
+    #Datos del medico que realizo el cambio
+    medico_id = request.json['medico_id']
+    observacion = request.json['observacion']
+    descuento = request.json['descuento']
+
+    #Update
+    update_order = Orden.query.filter_by(id=id).first()
+    update_order.estado = estado
+    update_order.medico_id = medico_id
+    update_order.observacion = observacion
+    update_order.descuento = descuento
+
+    db.session.commit()
+
+    return orden_schema.jsonify(update_order)
+
+
+#Obtener una orden por ID
+@app.route('/api/order/<int:pk>', methods=['GET'])
+def get_order(pk):
+    order = Orden.query.get(pk)
+    order_result = orden_schema.dump(order)
+    return jsonify(order_result)
+
+
+#Login del usuario
 @app.route('/api/user/login', methods=['POST'])
 def login():
     email = request.json['email']
