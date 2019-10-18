@@ -38,13 +38,18 @@ export class LoginFormComponent implements OnInit {
       res => {
         this.user = res
         console.log(res)
-        localStorage.setItem("user", JSON.stringify(this.user[0]))
+        if (JSON.stringify(this.user[0])){
+          localStorage.setItem("user", JSON.stringify(this.user[0]))
+        } else {
+          alert("Error: Ese usuario no existe");
+        }
       },
       err => console.error(err)
     )
     setTimeout(function(){location.reload(),this.route.navigate(["/"]); }, 600);
     this.route.navigate(["/"]);
   }
+  }
 
 
-}
+

@@ -1,12 +1,13 @@
 import datetime, os, uuid
 from flask_login import UserMixin, LoginManager
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields, post_load, ValidationError
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/test"
@@ -251,6 +252,7 @@ def login():
     password = request.json['password']
     login = User.query.filter_by(email=email)
     return users_schema.jsonify(login)
+
 
 if __name__ == "__main__":
     db.create_all()
