@@ -11,18 +11,26 @@
         <li class="nav-item" *ngIf="!user">
           <a class="nav-link" routerLink="/login" routerLinkActive="active">Iniciar sesion</a>
         </li>
-        <li class="nav-item" *ngIf="user">
+        <div *ngIf="user">
+        <li class="nav-item" *ngIf="isMedico !== true">
           <a class="nav-link" routerLink="/order" routerLinkActive="active">Cargar Orden</a>
         </li>
-        <li class="nav-item" *ngIf="user">
+        </div>
+        <div *ngIf="user">
+        <li class="nav-item" *ngIf="isMedico !== true">
           <a class="nav-link" routerLink="/verorden" routerLinkActive="active">Ver Orden</a>
         </li>
+        </div>
+        <div>
         <li class="nav-item" *ngIf="isMedico == true">
           <a class="nav-link" routerLink="/verMed" routerLinkActive="active">Médico</a>
         </li>
+      </div>
+        <div>
         <li class="nav-item" *ngIf="user">
           <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="logout()">Cerra sesion</a>
-        </li>    
+        </li> 
+        </div>   
       </ul>
     </div>
   </nav>
