@@ -1,4 +1,4 @@
-import datetime
+import datetime, os, uuid
 from flask_login import UserMixin, LoginManager
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +9,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin3:password@localhost/flask_app"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
+app.config["IMAGE_UPLOADS"] = "/var/www/img/"
 db = SQLAlchemy(app)
 CORS(app)
 ma = Marshmallow(app)
@@ -76,7 +77,7 @@ class Orden(db.Model):
 
     #Datos de la Orden
     id = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.LargeBinary)
+    data = db.Column(db.String(300))
     estado = db.Column(db.String(300), default='Pendiente')
     tipo = db.Column(db.String(300))
     fecha = db.Column(db.DateTime, default=datetime.datetime.utcnow)
@@ -195,18 +196,20 @@ def get_ordenes_user(pk):
 #Crear una nueva Orden, del user
 @app.route('/api/order', methods=['POST'])
 def add_order():
-    
+    unique_filename = str(uuid.uuid4())
+    if request.method == 'POST':
+        if request.files:
+            image = request.files["image"]
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], unique_filename))
     #Datos del form order user
-    tipo = request.json['tipo']
-    user_id = request.json['user_id']
-
-    new_orden = Orden(tipo=tipo, user_id=user_id)
-
+    tipo = request.form['tipo']
+    user_id = int(request.form['user_id'])
+    data = "http://localhost/images/"+unique_filename
+    new_orden = Orden(tipo=tipo,data=data,user_id=user_id)
     db.session.add(new_orden)
     db.session.commit()
 
     return orden_schema.jsonify(new_orden)
-
 
 #Edit de orden departe del medico
 @app.route('/api/order', methods=['PUT'])
