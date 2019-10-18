@@ -26,11 +26,14 @@
           <a class="nav-link" routerLink="/verMed" routerLinkActive="active">Médico</a>
         </li>
       </div>
-        <div>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <div>
         <li class="nav-item" *ngIf="user">
           <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="logout()">Cerra sesion</a>
         </li> 
-        </div>   
-      </ul>
+      </div>
+      </ul>       
+      
     </div>
   </nav>
