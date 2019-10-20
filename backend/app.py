@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/test"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin3:password@localhost/flask_app"
 app.config["IMAGE_UPLOADS"] = "/var/www/img/"
 db = SQLAlchemy(app)
 CORS(app)

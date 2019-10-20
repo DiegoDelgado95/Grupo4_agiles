@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+//Service
+import { UserService } from 'src/app/services/user.service';
 import { OrderService } from 'src/app/services/order.service';
-import { ActivatedRoute, Router, RouteConfigLoadEnd } from '@angular/router';
+
+//Interfaces
 import { Order } from 'src/app/models/order';
 import { User } from 'src/app/models/user';
-import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-medico-mod-ord',
@@ -13,9 +18,14 @@ import { UserService } from 'src/app/services/user.service';
 export class MedicoModOrdComponent implements OnInit {
 
   orders:any=[];
-  modalUser:User;
   modalMedico:User;
 
+  modalUser:User={
+    first_name:'',
+    last_name:'',
+    nro_afiliado:0
+  }
+  
   modalOrder:Order={
     estado: '',
     descuento:'',
@@ -24,7 +34,7 @@ export class MedicoModOrdComponent implements OnInit {
   }
   
 
-  constructor(private _userService:UserService, private _orderService: OrderService, private router:Router, private activedRoute:ActivatedRoute) { }
+  constructor(private _userService:UserService, private _orderService: OrderService, private router:Router) { }
 
   ngOnInit() {
     this.getOrders()
@@ -35,7 +45,6 @@ export class MedicoModOrdComponent implements OnInit {
   getOrders(){
     this._orderService.getOrders().subscribe(res => {
       this.orders = res
-      console.log(res)
     },
     err => console.error(err)
     )
@@ -45,35 +54,34 @@ export class MedicoModOrdComponent implements OnInit {
   //Metodo para pasarle los datos al modal
   modOrder(id:number){
     //Obtengo los datos del medico logeado que modifica
-    this.modalMedico = JSON.parse( localStorage.getItem("user"));
+    this.modalMedico = this._userService.getCurrentUser();
 
     //Obtengo los datos de la orden selecionado
     this._orderService.getOrder(id).subscribe(res =>{
       this.modalOrder = res
-      console.log(res)
+
+      //Al mismo tiempo Obtengo el User
+      this._userService.getUser(this.modalOrder.user_id).subscribe(res => {
+        this.modalUser = res
+      },
+      //Error User
+      err => console.error(err)
+      )
     },
+    //Error Order
     err => console.error(err)
     )
 
-    //Obtengo los datos del paciente
-    this._userService.getUser(this.modalOrder.user_id).subscribe(res => {
-      this.modalUser = res
-      console.log(res)
-    },
-    err => console.error(err)
-    )
   }
 
   //Editar una orden por el medico
   editOrderMedico(){
     this.modalOrder.medico_id = this.modalMedico.id
     this._orderService.updateOrder(this.modalOrder).subscribe(res => {
-      console.log(res)
     },
       err => console.error(err)
     )
-    console.log(this.modalOrder)
-    this.router.navigate(["/verMed"])
+    setTimeout(function(){location.reload()}, 600);
   }
 
 

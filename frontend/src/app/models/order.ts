@@ -4,7 +4,7 @@ export interface Order {
     estado?: string;
     tipo?: string;
     user_id?: number;
-    fecha?: string;
+    fecha?: Date;
     descuento?: string;
     observacion?: string;
     medico_id?: number;

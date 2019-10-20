@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
+
+//Servicio
 import { UserService } from 'src/app/services/user.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { timeout } from 'q';
+
+//Interfaz
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'loginform',
@@ -12,44 +15,21 @@ import { timeout } from 'q';
 export class LoginFormComponent implements OnInit {
 
   user:User={
-    id:0,
     email: '',
-    username: '',
-    first_name: '',
-    last_name: '',
-    password: '',
-    nro_afiliado:0,
-    telefono: '',
-    ciudad: '',
-    estado_civil: '',
-    direccion: '',
-    is_admin: '',
+    password: ''
   }
 
 
-  constructor(private userService: UserService, private route:Router, private activedRoute:ActivatedRoute) { }
+  constructor(private userService: UserService, private route:Router) { }
 
   ngOnInit() {
   }
 
 
-  login(){
-    this.userService.getLogin(this.user).subscribe(
-      res => {
-        this.user = res
-        console.log(res)
-        if (JSON.stringify(this.user[0])){
-          localStorage.setItem("user", JSON.stringify(this.user[0]))
-        } else {
-          alert("Error: Ese usuario no existe");
-        }
-      },
-      err => console.error(err)
-    )
-    setTimeout(function(){location.reload(),this.route.navigate(["/"]); }, 600);
+  login():void {
+    this.userService.setLogin(this.user)
+    setTimeout(function(){location.reload()}, 600);
     this.route.navigate(["/"]);
   }
-  }
-
-
-
+  
+}

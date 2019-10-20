@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -9,38 +11,33 @@ import { User } from 'src/app/models/user';
 export class NavigationComponent implements OnInit {
 
   isMedico:string='false';
-  
+  islogged:boolean=false;
+  user:User;
 
-  user:User={
-    id:0,
-    email: '',
-    username: '',
-    first_name: '',
-    last_name: '',
-    password: '',
-    nro_afiliado:0,
-    telefono: '',
-    ciudad: '',
-    estado_civil: '',
-    direccion: '',
-    is_admin: 'false',
-  }
 
-  constructor() { }
+  constructor(private _userService:UserService, private route:Router) { }
 
   ngOnInit() {
-    //Busco en localStorage el user que le logeo
-    this.user = JSON.parse( localStorage.getItem("user"));
-    if (this.user.is_admin == '') {
-      this.isMedico='false'
-    } else {
-      this.isMedico = this.user.is_admin;
-    }
+    this.checkUser();
   }
 
   logout(){
     localStorage.removeItem("user");
-    setTimeout(function(){location.reload(),this.route.navigate(["/"]); }, 500)
+    setTimeout(function(){location.reload()}, 500)
+    this.route.navigate(["/"])
   }
 
+
+  checkUser():void{
+      //Llamo al service para obtener el USER logeado
+      if((this.user=this._userService.getCurrentUser()) != null){
+        //Verifico si es MEDICO
+        if (this.user.is_admin != '') {
+          this.isMedico = this.user.is_admin;
+        }
+      } 
+  }
+
+
+  
 }
