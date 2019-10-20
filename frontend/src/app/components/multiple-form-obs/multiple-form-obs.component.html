@@ -1,0 +1,21 @@
+<div class="col-md-6 offset-md-3">
+    <div class="card">
+        <div class="card-header">
+            <h3>Formulario de carga</h3>
+        </div>
+        <div class="card-body">
+            <label>Seleccione que desea cargar en la cartilla:</label>
+
+            <select id="tipo" [(ngModel)]="cartilla.tipo" [ngModelOptions]="{standalone: true}" class="form-control">
+                <option value="1">Medicamento</option>
+                <option value="2">Hospital</option>
+                <option value="3">Farmacia</option>
+                <option value="4">Medico</option>
+            </select>
+        </div>
+        <div *ngIf="tipo == 1">
+           
+        </div>
+
+    </div>
+</div>

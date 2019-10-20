@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin3:password@localhost/flask_app"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
 app.config["IMAGE_UPLOADS"] = "/var/www/img/"
 db = SQLAlchemy(app)
 CORS(app)
@@ -252,6 +252,50 @@ def login():
     password = request.json['password']
     login = User.query.filter_by(email=email)
     return users_schema.jsonify(login)
+
+## MODEL - TABLA CARTILLA ##
+class cartilla(db.Model):
+    __tablename__ = 'cartilla'
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(60), index=True, unique=True)
+    direccion = db.Column(db.String(60), index=True, unique=True)
+    ## 1 - medicamento / 2 - Hospital / 3 - Farmacia / el medico lo cargamos del otro formulario de registro ##
+    is_element = db.Column(db.Integer, index=True, unique=True) 
+
+## CARTILLA SCHEMA ##
+class CarSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'nombre', 'direccion', 'is_element')
+
+    @post_load
+    def make_cartilla(self, data, **kwargs):
+        return cartilla(**data)
+
+cartilla_schema = CarSchema()
+cartillas_schema = CarSchema(many=True)
+
+## CARGAR CARTILLA ##
+
+@app.route('/api/cartilla', methods=['POST'])
+def add_elem():
+    nombre = request.json['nombre']
+    direccion = request.json['direccion']
+    is_element = request.json['is_element']
+
+    new_elem = elem(nombre=nombre,
+                    direccion=direccion,
+                    is_element=is_element)
+
+    db.session.add(new_elem)
+    db.session.commit()
+
+    return user_schema.jsonify(new_elem)
+
+
+
+
+
 
 
 if __name__ == "__main__":
