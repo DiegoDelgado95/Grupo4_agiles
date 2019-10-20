@@ -6,18 +6,18 @@
         <form class="card-body">
             <div class="form-group">
                     <label>Correo electronico: </label>
-                    <input type="email" name="email" class="form-control">
+                    <input [(ngModel)]="user.email" type="email" name="email" class="form-control">
             </div>
             <div class="form-group">
                     <label>Contraseña: </label>
-                    <input type="password" name="pass" class="form-control">
+                    <input [(ngModel)]="user.password" type="password" name="password" class="form-control">
             </div>
             <div class="col text-center">
                 <div class="btn-group mr-2">
                     <button type="button" class="btn btn-lg btn-primary" (click)="login()">Iniciar Sesion</button>
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary btn-lg">Registrarse</button>
+                    <button routerLink="/register" routerLinkActive="active" type="button" class="btn btn-primary btn-lg">Registrarse</button>
                 </div>
             </div>
         </form>

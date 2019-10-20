@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Order } from 'src/app/models/order';
+
 import { OrderService } from 'src/app/services/order.service';
-import { Router, ActivatedRoute } from '@angular/router';
+
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-ver-orden',
@@ -10,32 +12,23 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class VerOrdenComponent implements OnInit {
 
-  test:Boolean=true;
+  user:User;
   orders:any=[];
 
-  order:Order = {
-    id: 0,
-    data: '',
-    estado: '',
-    tipo: '',
-    user: '',
-    fecha: '',
-  }
-
-  constructor(private orderService: OrderService, private router:Router, private activedRoute:ActivatedRoute) { }
+  constructor(private orderService: OrderService, private userService:UserService) { }
 
   ngOnInit() {
     this.getOrders();
-    console.log(this.orders)
   }
 
 
   getOrders(){
-    this.orderService.getOrders().subscribe(
+    //Obtengo el USER logeado
+    this.user = this.userService.getCurrentUser();
+    //Obtengo todas las ORDENES del USER logeado
+    this.orderService.getOrderUser(this.user.id).subscribe(
       res => {
         this.orders = res
-        console.log(res)
-        console.log(this.orders)
       },
       err => console.error(err)
     )

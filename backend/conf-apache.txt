@@ -1,0 +1,5 @@
+Para hacer andar el apache hay que: 
+- Copiar images.conf en /etc/apache2/conf-available/ -> cp images.conf /etc/apache2/conf-available/
+- Crear directorio "img" en /var/www/ -> mkdir /var/www/img
+- Darle permisos al usuario de apache sobre "img" -> chmod -R 777 /var/www/img/ && chown -R www-data:www-data /var/www/img/
+- Habilitar conf -> a2enconf images.conf

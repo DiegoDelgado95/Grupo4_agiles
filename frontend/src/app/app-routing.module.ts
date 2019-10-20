@@ -5,6 +5,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { OrderFormComponent } from './components/order-form/order-form.component';
 import { VerOrdenComponent } from "./components/ver-orden/ver-orden.component";
+import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
 
 const routes: Routes = [
   { path: '',
@@ -30,7 +31,11 @@ const routes: Routes = [
   {
     path: 'verorden',
     component: VerOrdenComponent
-  }
+  },
+  {
+    path: 'verMed',
+    component: MedicoModOrdComponent
+  },
 ];
 
 @NgModule({
