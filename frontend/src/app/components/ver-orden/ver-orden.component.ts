@@ -26,13 +26,16 @@ export class VerOrdenComponent implements OnInit {
 
   ngOnInit() {
     this.getOrders();
+    console.log(this.orders)
   }
 
 
   getOrders(){
     this.orderService.getOrders().subscribe(
       res => {
-        this.order = res
+        this.orders = res
+        console.log(res)
+        console.log(this.orders)
       },
       err => console.error(err)
     )
