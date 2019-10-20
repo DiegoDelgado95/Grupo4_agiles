@@ -3,6 +3,9 @@ export interface Order {
     data?: string;
     estado?: string;
     tipo?: string;
-    user?: string;
-    fecha?: string;
+    user_id?: number;
+    fecha?: Date;
+    descuento?: string;
+    observacion?: string;
+    medico_id?: number;
 }
