@@ -1,4 +1,4 @@
-export interface cartilla {
+export interface Cartilla {
     id?: number;
     tipo?:string;
     nombre?: string;

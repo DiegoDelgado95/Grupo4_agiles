@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Cartilla } from 'src/app/models/cartilla';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,8 +8,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./multiple-form-obs.component.css']
 })
 export class MultipleFormOBSComponent implements OnInit {
+  
+  cartilla: Cartilla ={
+  id: 0,
+  tipo:'',
+  nombre: '',
+  direccion: '',
+  is_element: 1,
+  }
 
-  show:boolean=false;
+  
+
 
   constructor(private route:Router) { }
 

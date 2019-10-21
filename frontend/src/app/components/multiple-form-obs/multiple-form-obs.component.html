@@ -3,19 +3,32 @@
         <div class="card-header">
             <h3>Formulario de carga</h3>
         </div>
-        <div class="card-body">
+        <form class="card-body">
             <label>Seleccione que desea cargar en la cartilla:</label>
 
-            <select id="tipo" [(ngModel)]="cartilla.tipo" [ngModelOptions]="{standalone: true}" class="form-control">
-                <option value="1">Medicamento</option>
-                <option value="2">Hospital</option>
-                <option value="3">Farmacia</option>
-                <option value="4">Medico</option>
+            <select [(ngModel)]="cartilla.tipo" [ngModelOptions]="{standalone: true}" class="form-control">
+                <option value="Medicamento">Medicamento</option>
+                <option value="Hospital">Hospital</option>
+                <option value="Farmacia">Farmacia</option>
+                <option value="Medico">Medico</option>
             </select>
-        </div>
-        <div *ngIf="tipo == 1">
-           
-        </div>
+        
 
+        <div *ngIf="cartilla.tipo === 'Medicamento'">
+            <label>Nombre: </label>   
+            <input [(ngModel)]="cartilla.nombre" [ngModelOptions]="{standalone: true}"  type="text">
+        </div> 
+        <div *ngIf="cartilla.tipo === 'Hospital'">
+                <label>Nombre: </label>
+                <input type="text" [(ngModel)]="cartilla.nombre" type="text" [ngModelOptions]="{standalone: true}" class="form-control">
+                <label>Direccion:</label> 
+                <input type="text" [(ngModel)]="cartilla.direccion" type="text" [ngModelOptions]="{standalone: true}" class="form-control">
+        </div>
+        <div *ngIf="cartilla.tipo === 'Medico'">
+                <!---<registerform></registerform> -->
+        </div>
+        </form>
     </div>
+
 </div>
+
