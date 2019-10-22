@@ -293,11 +293,6 @@ def add_elem():
     return user_schema.jsonify(new_elem)
 
 
-
-
-
-
-
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True, port=5000)
