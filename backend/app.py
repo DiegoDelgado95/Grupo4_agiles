@@ -81,13 +81,66 @@ class Orden(db.Model):
     data = db.Column(db.String(300))
     estado = db.Column(db.String(300), default='Pendiente')
     tipo = db.Column(db.String(300))
-    fecha = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    fecha = db.Column(db.DateTime, default=datetime.datetime.now())
     #Paciente
     user_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
     #Medico
-    medico_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=True)
+    medico_id = db.Column(db.Integer, db.ForeignKey('medicos.id'), nullable=True)
     observacion = db.Column(db.String(300))
     descuento = db.Column(db.String(60))
+
+## MODEL - TABLA CARTILLA ##
+class Cartilla(db.Model):
+    __tablename__ = 'cartilla'
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(60), index=True, unique=True)
+    direccion = db.Column(db.String(60), index=True, unique=True)
+    telefono = db.Column(db.String(60), index=True, unique=True)
+    ## 1 - medicamento / 2 - Hospital / 3 - Farmacia / el medico lo cargamos del otro formulario de registro ##
+    is_element = db.Column(db.Integer, index=True) 
+
+## MODEL - TABLA MEDICOS ##
+class Medico(db.Model):
+    __tablename__ = 'medicos'
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(60), index=True)
+    cuit = db.Column(db.String(60), index=True)
+    matricula = db.Column(db.String(60), index=True, unique=True)
+    especialidad = db.Column(db.String(60), index=True)
+    hospital_id = db.Column(db.Integer, db.ForeignKey('cartilla.id'), nullable=True)
+    correo = db.Column(db.String(60), index=True, unique=True)
+    password = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean, default=True)
+
+
+
+## MEDICO SCHEMA ##
+class MedicoSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'nombre', 'cuit', 'matricula', 'especialidad', 'hospital_id', 'is_admin')
+
+    @post_load
+    def make_medico(self, data, **kwargs):
+        return medico(**data)
+
+medico_schema = MedicoSchema()
+medicos_schema = MedicoSchema(many=True)
+
+    
+
+## CARTILLA SCHEMA ##
+class CarSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'nombre', 'direccion', 'telefono', 'is_element')
+
+    @post_load
+    def make_cartilla(self, data, **kwargs):
+        return cartilla(**data)
+
+cartilla_schema = CarSchema()
+cartillas_schema = CarSchema(many=True)
 
 ## USER SCHEMA ##
 class UserSchema(ma.Schema):
@@ -109,14 +162,6 @@ class OrdenSchema(ma.Schema):
     @post_load
     def make_order(self, data, **kwargs):
         return Orden(**data)
-
-class BytesField(fields.Field):
-    def _validate(self, value):
-        if type(value) is not bytes:
-            raise ValidationError('Invalid input type.')
-
-        if value is None or value == b'':
-            raise ValidationError('Invalid value')
 
 orden_schema = OrdenSchema()
 ordenes_schema = OrdenSchema(many=True)
@@ -174,7 +219,6 @@ def add_user():
     return user_schema.jsonify(new_user)
 
 
-
 #Obtener todas la ordenes
 @app.route("/api/order")
 def get_ordenes():
@@ -184,14 +228,12 @@ def get_ordenes():
     return jsonify(result)
 
 
-
 #Obtener todas las ordenes de un usuario
 @app.route("/api/orders/<int:pk>", methods=['GET'])
 def get_ordenes_user(pk):
     ordenes = Orden.query.filter_by(user_id=pk)
     result = ordenes_schema.dump(ordenes)
     return jsonify(result)      
-
 
 
 #Crear una nueva Orden, del user
@@ -211,6 +253,7 @@ def add_order():
     db.session.commit()
 
     return orden_schema.jsonify(new_orden)
+
 
 #Edit de orden departe del medico
 @app.route('/api/order', methods=['PUT'])
@@ -251,29 +294,20 @@ def login():
     email = request.json['email']
     password = request.json['password']
     login = User.query.filter_by(email=email)
-    return users_schema.jsonify(login)
+    login_medico = Medico.query.filter_by(correo=email)
+    medico = db.session.query(db.exists().where(Medico.correo == email)).scalar()
+    if medico:
+        return medicos_schema.jsonify(login_medico)
+    else:
+        return users_schema.jsonify(login)
 
-## MODEL - TABLA CARTILLA ##
-class cartilla(db.Model):
-    __tablename__ = 'cartilla'
-
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(60), index=True, unique=True)
-    direccion = db.Column(db.String(60), index=True, unique=True)
-    ## 1 - medicamento / 2 - Hospital / 3 - Farmacia / el medico lo cargamos del otro formulario de registro ##
-    is_element = db.Column(db.Integer, index=True, unique=True) 
-
-## CARTILLA SCHEMA ##
-class CarSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'nombre', 'direccion', 'is_element')
-
-    @post_load
-    def make_cartilla(self, data, **kwargs):
-        return cartilla(**data)
-
-cartilla_schema = CarSchema()
-cartillas_schema = CarSchema(many=True)
+# Obtener todos los  Medicos
+@app.route("/api/medicos")
+def get_medicos():
+    medicos = Medico.query.all()
+    # Serialize the queryset
+    result = medicos_schema.dump(medicos)
+    return jsonify(result)
 
 ## CARGAR CARTILLA ##
 

@@ -12,6 +12,8 @@ export class NavigationComponent implements OnInit {
 
   isMedico:string='false';
   islogged:boolean=false;
+  isAdmin:boolean=false;
+  isUser:boolean=false;
   user:User;
 
 
@@ -34,6 +36,12 @@ export class NavigationComponent implements OnInit {
         //Verifico si es MEDICO
         if (this.user.is_admin != '') {
           this.isMedico = this.user.is_admin;
+        }
+        if (this.user.username == 'admin') {
+          this.isAdmin = true
+        }
+        if (this.user.is_admin == ''){
+          this.isUser = true
         }
       } 
   }

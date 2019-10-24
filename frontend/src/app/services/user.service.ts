@@ -24,6 +24,9 @@ export class UserService {
     return this.http.get(`${this.API_URI}/users`);
   }
 
+  getMedicos(){
+    return this.http.get(`${this.API_URI}/medicos`);
+  }
   getUser(id: number){
     return this.http.get(`${this.API_URI}/users/${id}`);
   }
