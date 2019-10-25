@@ -37,7 +37,9 @@
             <label>Especialidad:</label> 
             <input type="text" class="form-control">
             <label>Hospital:</label> 
-            <input type="text" class="form-control"> <!-- Aca seria un select de Hospitales-->
+            <select class="form-control">
+                <option *ngFor="let hospital of hospitales">{{ hospital.nombre }}</option>
+            </select>
             <br>
             <input class="btn btn-primary btn-lg btn-block" (click)="saveNewItem()" type="submit" value="Agregar Medico">
         </div>

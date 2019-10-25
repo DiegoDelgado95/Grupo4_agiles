@@ -10,6 +10,7 @@ import { CartillaService } from 'src/app/services/cartilla.service';
 })
 export class MultipleFormOBSComponent implements OnInit {
   
+  hospitales:any=[];
   cartilla: Cartilla ={
   id: 0,
   tipo:'',
@@ -21,6 +22,7 @@ export class MultipleFormOBSComponent implements OnInit {
   constructor(private cartillaService:CartillaService, private route:Router) { }
 
   ngOnInit() {
+    this.getHospitales();
   }
 
   saveNewItem(){
@@ -31,6 +33,14 @@ export class MultipleFormOBSComponent implements OnInit {
         this.route.navigate(['/']);
       },
       err => console.error(err)
+    )
+  }
+
+  getHospitales(){
+    this.cartillaService.getHospitales().subscribe(res => {
+      this.hospitales = res
+    },
+    err => console.error(err)
     )
   }
 

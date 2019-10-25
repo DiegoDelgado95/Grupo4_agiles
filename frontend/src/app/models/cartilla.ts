@@ -4,4 +4,5 @@ export interface Cartilla {
     nombre?: string;
     direccion?: string;
     telefono?:string;
+    is_element?:number;
 }
