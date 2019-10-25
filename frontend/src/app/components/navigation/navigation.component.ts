@@ -15,6 +15,7 @@ export class NavigationComponent implements OnInit {
   isAdmin:boolean=false;
   isUser:boolean=false;
   user:User;
+  name:string=this._userService.getCurrentUserName();
 
 
   constructor(private _userService:UserService, private route:Router) { }

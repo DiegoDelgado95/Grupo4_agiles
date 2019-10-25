@@ -318,6 +318,31 @@ def get_medicos():
     result = medicos_schema.dump(medicos)
     return jsonify(result)
 
+# Crear un nuevo Medico
+@app.route("/api/medicos", methods=['POST'])
+def add_medico():
+    nombre = request.json['nombre']
+    cuit = request.json['cuit']
+    matricula = request.json['matricula']
+    especialidad = request.json['especialidad']
+    hospital = request.json['hospital']
+    hospital_id = Cartilla.query.filter_by(nombre=hospital).first()
+    correo = request.json['correo']
+    password = request.json['password']
+
+    new_med = Medico(nombre=nombre, 
+                    cuit=cuit,
+                    matricula=matricula,
+                    especialidad=especialidad,
+                    hospital_id=hospital_id,
+                    correo=correo,
+                    password=password)
+    db.session.add(new_med)
+    db.session.commit()
+
+    return medico_schema.jsonify(new_med)
+
+
 # Obtener todos los items de la cartilla
 @app.route("/api/cartilla")
 def get_cartilla():

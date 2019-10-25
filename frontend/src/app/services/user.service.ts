@@ -24,9 +24,6 @@ export class UserService {
     return this.http.get(`${this.API_URI}/users`);
   }
 
-  getMedicos(){
-    return this.http.get(`${this.API_URI}/medicos`);
-  }
   getUser(id: number){
     return this.http.get(`${this.API_URI}/users/${id}`);
   }
@@ -68,6 +65,16 @@ export class UserService {
     }else{
       return null;
     }
+  }
+
+  getCurrentUserName(){
+    let user_string = localStorage.getItem("user");
+    if(!isNullOrUndefined(user_string)){
+      this._user = JSON.parse(user_string);
+      return "Hi, " + this._user.first_name + "!";
+    }else{
+      return null;
+    }    
   }
   
 }

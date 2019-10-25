@@ -3,7 +3,7 @@ import { Order } from 'src/app/models/order';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from 'src/app/services/user.service';
+import { MedicoService } from 'src/app/services/medico.service';
 
 @Component({
   selector: 'orderform',
@@ -21,7 +21,7 @@ export class OrderFormComponent implements OnInit {
     user_id:0,
     tipo: '',
   }
-  constructor(private http: HttpClient, private router:Router, private activedRoute:ActivatedRoute, private userService:UserService) { }
+  constructor(private http: HttpClient, private router:Router, private activedRoute:ActivatedRoute, private medicoService:MedicoService) { }
 
   ngOnInit() {
     this.getMedicos();
@@ -48,7 +48,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   getMedicos(){
-    this.userService.getMedicos().subscribe(res => {
+    this.medicoService.getMedicos().subscribe(res => {
       this.medicos = res
     },
     err => console.error(err)

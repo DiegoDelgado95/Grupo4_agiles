@@ -32,9 +32,14 @@
     <ul class="nav navbar-nav navbar-right">
       <div>
         <li class="nav-item" *ngIf="user">
-          <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="logout()">Cerra sesion</a>
+          <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="logout()">Cerrar sesion</a>
         </li> 
       </div>
-      </ul>       
+        <div>
+          <li class="nav-item" *ngIf="isUser == true">
+            <a class="nav-link" routerLink="/" routerLinkActive="active"> {{ name }} </a>
+          </li> 
+      </div>
+    </ul>    
     </div>
   </nav>
