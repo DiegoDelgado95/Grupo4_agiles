@@ -318,6 +318,14 @@ def get_medicos():
     result = medicos_schema.dump(medicos)
     return jsonify(result)
 
+# Obtener todos los  Hospitales
+@app.route("/api/hospitales")
+def get_hospitales():
+    hospitales = Cartilla.query.filter_by(is_element="2").all()
+    # Serialize the queryset
+    result = cartillas_schema.dump(hospitales)
+    return jsonify(result)
+
 # Crear un nuevo Medico
 @app.route("/api/medicos", methods=['POST'])
 def add_medico():
