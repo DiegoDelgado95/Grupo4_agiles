@@ -12,7 +12,10 @@ export class NavigationComponent implements OnInit {
 
   isMedico:string='false';
   islogged:boolean=false;
+  isAdmin:boolean=false;
+  isUser:boolean=false;
   user:User;
+  name:string=this._userService.getCurrentUserName();
 
 
   constructor(private _userService:UserService, private route:Router) { }
@@ -34,6 +37,12 @@ export class NavigationComponent implements OnInit {
         //Verifico si es MEDICO
         if (this.user.is_admin != '') {
           this.isMedico = this.user.is_admin;
+        }
+        if (this.user.username == 'admin') {
+          this.isAdmin = true
+        }
+        if (this.user.is_admin == ''){
+          this.isUser = true
         }
       } 
   }

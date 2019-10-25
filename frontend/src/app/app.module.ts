@@ -14,6 +14,7 @@ import { OrderFormComponent } from './components/order-form/order-form.component
 import { VerOrdenComponent } from './components/ver-orden/ver-orden.component';
 import { CommonModule } from '@angular/common';
 import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
+import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-or
     LoginFormComponent,
     OrderFormComponent,
     VerOrdenComponent,
-    MedicoModOrdComponent
+    MedicoModOrdComponent,
+    MultipleFormOBSComponent
   ],
   imports: [
     BrowserModule,

@@ -9,27 +9,37 @@
           <a class="nav-link" routerLink="/login" routerLinkActive="active">Iniciar sesion</a>
         </li>
         <div *ngIf="user">
-        <li class="nav-item" *ngIf="isMedico !== true">
+        <li class="nav-item" *ngIf="isUser == true">
           <a class="nav-link" routerLink="/order" routerLinkActive="active">Cargar Orden</a>
         </li>
         </div>
+        <div>
+          <li class="nav-item" *ngIf="isAdmin == true">
+            <a class="nav-link" routerLink="/cartilla" routerLinkActive="active">Cargar Cartilla</a>
+          </li>
+        </div>
         <div *ngIf="user">
-        <li class="nav-item" *ngIf="isMedico !== true">
+        <li class="nav-item" *ngIf="isUser == true">
           <a class="nav-link" routerLink="/verorden" routerLinkActive="active">Ver Orden</a>
         </li>
         </div>
         <div>
         <li class="nav-item" *ngIf="isMedico == true">
-          <a class="nav-link" routerLink="/verMed" routerLinkActive="active">Médico</a>
+          <a class="nav-link" routerLink="/verMed" routerLinkActive="active">Autorizar Ordenes</a>
         </li>
       </div>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <div>
         <li class="nav-item" *ngIf="user">
-          <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="logout()">Cerra sesion</a>
+          <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="logout()">Cerrar sesion</a>
         </li> 
       </div>
-      </ul>       
+        <div>
+          <li class="nav-item" *ngIf="isUser == true">
+            <a class="nav-link" routerLink="/" routerLinkActive="active"> {{ name }} </a>
+          </li> 
+      </div>
+    </ul>    
     </div>
   </nav>

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
-import { OrderService } from 'src/app/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { HttpClient } from '@angular/common/http';
+import { MedicoService } from 'src/app/services/medico.service';
 
 @Component({
   selector: 'orderform',
@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class OrderFormComponent implements OnInit {
   user:User;
-  orders:any=[];
+  medicos:any=[];
 
   order:Order = {
     id: 0,
@@ -21,9 +21,10 @@ export class OrderFormComponent implements OnInit {
     user_id:0,
     tipo: '',
   }
-  constructor(private http: HttpClient, private orderService: OrderService, private router:Router, private activedRoute:ActivatedRoute) { }
+  constructor(private http: HttpClient, private router:Router, private activedRoute:ActivatedRoute, private medicoService:MedicoService) { }
 
   ngOnInit() {
+    this.getMedicos();
   }
 
   selectedFile: File = null;
@@ -38,11 +39,20 @@ export class OrderFormComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem("user"));
     fd.append('user_id', (this.user.id).toString());
     this.http.post('http://localhost:5000/api/order', fd).subscribe (res =>{
+      console.log(res)
       alert("Orden agregada correctamente");
       this.router.navigate(["/verorden"]);
     },
       err => console.error(err)
     );
+  }
+
+  getMedicos(){
+    this.medicoService.getMedicos().subscribe(res => {
+      this.medicos = res
+    },
+    err => console.error(err)
+    )
   }
 }
 
