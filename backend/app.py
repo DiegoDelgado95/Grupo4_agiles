@@ -100,6 +100,15 @@ class Cartilla(db.Model):
     ## 1 - medicamento / 2 - Hospital / 3 - Farmacia / el medico lo cargamos del otro formulario de registro ##
     is_element = db.Column(db.Integer, index=True) 
 
+    global switch_element
+    def switch_element(argument):
+        switcher = {
+            'Medicamento': 1,
+            'Hospital': 2,
+            'Farmacia': 3
+        }
+        return switcher.get(argument)
+
 ## MODEL - TABLA MEDICOS ##
 class Medico(db.Model):
     __tablename__ = 'medicos'
@@ -309,22 +318,33 @@ def get_medicos():
     result = medicos_schema.dump(medicos)
     return jsonify(result)
 
-## CARGAR CARTILLA ##
+# Obtener todos los items de la cartilla
+@app.route("/api/cartilla")
+def get_cartilla():
+    cartilla = Cartilla.query.all()
+    # Serialize the queryset
+    result = cartillas_schema.dump(cartilla)
+    return jsonify(result)
 
+# Cargar un item a la cartilla
 @app.route('/api/cartilla', methods=['POST'])
 def add_elem():
     nombre = request.json['nombre']
     direccion = request.json['direccion']
-    is_element = request.json['is_element']
+    tipo = request.json['tipo']
+    telefono = request.json['telefono']
 
-    new_elem = elem(nombre=nombre,
+    is_element = switch_element(tipo)
+
+    new_elem = Cartilla(nombre=nombre,
                     direccion=direccion,
-                    is_element=is_element)
+                    is_element=is_element,
+                    telefono=telefono)
 
     db.session.add(new_elem)
     db.session.commit()
 
-    return user_schema.jsonify(new_elem)
+    return cartilla_schema.jsonify(new_elem)
 
 
 if __name__ == "__main__":

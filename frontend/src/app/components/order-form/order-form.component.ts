@@ -39,6 +39,7 @@ export class OrderFormComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem("user"));
     fd.append('user_id', (this.user.id).toString());
     this.http.post('http://localhost:5000/api/order', fd).subscribe (res =>{
+      console.log(res)
       alert("Orden agregada correctamente");
       this.router.navigate(["/verorden"]);
     },

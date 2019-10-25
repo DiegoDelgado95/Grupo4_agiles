@@ -18,7 +18,7 @@
             <label>Nombre: </label>   
             <input [(ngModel)]="cartilla.nombre" [ngModelOptions]="{standalone: true}"  type="text" class="form-control">
             <br>
-            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Agregar Medicamento">
+            <input class="btn btn-primary btn-lg btn-block" (click)="saveNewItem()" type="submit" value="Agregar Medicamento">
         </div> 
         <div *ngIf="cartilla.tipo === 'Hospital' || cartilla.tipo === 'Farmacia'">
                 <label>Nombre: </label>
@@ -28,8 +28,8 @@
                 <label>Telefono:</label> 
                 <input type="text" [(ngModel)]="cartilla.telefono" type="text" [ngModelOptions]="{standalone: true}" class="form-control">
                 <br>
-                <input *ngIf="cartilla.tipo === 'Farmacia'" class="btn btn-primary btn-lg btn-block" type="submit" value="Agregar Farmacia">
-                <input *ngIf="cartilla.tipo === 'Hospital'" class="btn btn-primary btn-lg btn-block" type="submit" value="Agregar Hospital">
+                <input *ngIf="cartilla.tipo === 'Farmacia'" class="btn btn-primary btn-lg btn-block" (click)="saveNewItem()" type="submit" value="Agregar Farmacia">
+                <input *ngIf="cartilla.tipo === 'Hospital'" class="btn btn-primary btn-lg btn-block" (click)="saveNewItem()" type="submit" value="Agregar Hospital">
         </div>
         <div *ngIf="cartilla.tipo === 'Medico'">
             <label>Nombre: </label>
@@ -39,7 +39,7 @@
             <label>Hospital:</label> 
             <input type="text" class="form-control"> <!-- Aca seria un select de Hospitales-->
             <br>
-            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Agregar Medico">
+            <input class="btn btn-primary btn-lg btn-block" (click)="saveNewItem()" type="submit" value="Agregar Medico">
         </div>
         </form>
     </div>

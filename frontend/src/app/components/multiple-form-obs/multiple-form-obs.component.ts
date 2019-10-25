@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cartilla } from 'src/app/models/cartilla';
 import { Router } from '@angular/router';
+import { CartillaService } from 'src/app/services/cartilla.service';
 
 @Component({
   selector: 'app-multiple-form-obs',
@@ -14,16 +15,23 @@ export class MultipleFormOBSComponent implements OnInit {
   tipo:'',
   nombre: '',
   direccion: '',
-  is_element: 1,
+  telefono: '',
   }
 
-  
-
-
-  constructor(private route:Router) { }
+  constructor(private cartillaService:CartillaService, private route:Router) { }
 
   ngOnInit() {
   }
 
+  saveNewItem(){
+    this.cartillaService.saveItem(this.cartilla).subscribe(
+      res => {
+        console.log(res);
+        alert("Item cargado con exito");
+        this.route.navigate(['/']);
+      },
+      err => console.error(err)
+    )
+  }
 
 }
