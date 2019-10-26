@@ -20,6 +20,7 @@ export class OrderFormComponent implements OnInit {
     estado: '',
     user_id:0,
     tipo: '',
+    medico:''
   }
   constructor(private http: HttpClient, private router:Router, private activedRoute:ActivatedRoute, private medicoService:MedicoService) { }
 
@@ -36,6 +37,7 @@ export class OrderFormComponent implements OnInit {
     const fd = new FormData();
     fd.append('image', this.selectedFile, this.selectedFile.name);
     fd.append('tipo', this.order.tipo)
+    fd.append('medico', this.order.medico)
     this.user = JSON.parse(localStorage.getItem("user"));
     fd.append('user_id', (this.user.id).toString());
     this.http.post('http://localhost:5000/api/order', fd).subscribe (res =>{

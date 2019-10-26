@@ -85,7 +85,7 @@ class Orden(db.Model):
     #Paciente
     user_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
     #Medico
-    medico_id = db.Column(db.Integer, db.ForeignKey('medicos.id'), nullable=True)
+    medico = db.Column(db.String(60), db.ForeignKey('medicos.nombre'), nullable=True)
     observacion = db.Column(db.String(300))
     descuento = db.Column(db.String(60))
 
@@ -118,7 +118,7 @@ class Medico(db.Model):
     cuit = db.Column(db.String(60), index=True)
     matricula = db.Column(db.String(60), index=True, unique=True)
     especialidad = db.Column(db.String(60), index=True)
-    hospital_id = db.Column(db.Integer, db.ForeignKey('cartilla.id'), nullable=True)
+    hospital = db.Column(db.String(60), db.ForeignKey('cartilla.nombre'), nullable=True)
     correo = db.Column(db.String(60), index=True, unique=True)
     password = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=True)
@@ -128,7 +128,7 @@ class Medico(db.Model):
 ## MEDICO SCHEMA ##
 class MedicoSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'nombre', 'cuit', 'matricula', 'especialidad', 'hospital_id', 'is_admin')
+        fields = ('id', 'nombre', 'cuit', 'matricula', 'especialidad', 'hospital', 'is_admin')
 
     @post_load
     def make_medico(self, data, **kwargs):
@@ -166,7 +166,7 @@ users_schema = UserSchema(many=True)
 ## ORDEN SCHEMA ##
 class OrdenSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'data', 'estado', 'tipo', 'fecha', 'user_id', 'medico_id', 'observacion', 'descuento')
+        fields = ('id', 'data', 'estado', 'tipo', 'fecha', 'user_id', 'medico', 'observacion', 'descuento')
 
     @post_load
     def make_order(self, data, **kwargs):
@@ -255,9 +255,10 @@ def add_order():
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], unique_filename))
     #Datos del form order user
     tipo = request.form['tipo']
+    medico = request.form['medico']
     user_id = int(request.form['user_id'])
     data = "http://localhost/images/"+unique_filename
-    new_orden = Orden(tipo=tipo,data=data,user_id=user_id)
+    new_orden = Orden(tipo=tipo,data=data,user_id=user_id,medico=medico)
     db.session.add(new_orden)
     db.session.commit()
 
