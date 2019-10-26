@@ -23,6 +23,16 @@ export class CartillaService {
     return this.http.get(`${this.API_URI}/hospitales`);
   }
 
+  //Obtengo todos las farmacias de la cartilla
+  getFarmacias(){
+    return this.http.get(`${this.API_URI}/farmacias`);
+  }
+
+  //Obtengo todos los medicamentos de la cartilla
+  getMedicamentos(){
+    return this.http.get(`${this.API_URI}/medicamentos`);
+  }
+
   //Agrego un item a la cartilla
   saveItem(cartilla: Cartilla){
     return this.http.post(`${this.API_URI}/cartilla`, cartilla);

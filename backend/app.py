@@ -118,7 +118,7 @@ class Medico(db.Model):
     cuit = db.Column(db.String(60), index=True)
     matricula = db.Column(db.String(60), index=True, unique=True)
     especialidad = db.Column(db.String(60), index=True)
-    hospital_id = db.Column(db.Integer, db.ForeignKey('cartilla.id'), nullable=True)
+    hospital = db.Column(db.String(60), db.ForeignKey('cartilla.nombre'), nullable=True)
     correo = db.Column(db.String(60), index=True, unique=True)
     password = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=True)
@@ -128,7 +128,7 @@ class Medico(db.Model):
 ## MEDICO SCHEMA ##
 class MedicoSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'nombre', 'cuit', 'matricula', 'especialidad', 'hospital_id', 'is_admin')
+        fields = ('id', 'nombre', 'cuit', 'matricula', 'especialidad', 'hospital', 'is_admin')
 
     @post_load
     def make_medico(self, data, **kwargs):
@@ -326,6 +326,23 @@ def get_hospitales():
     result = cartillas_schema.dump(hospitales)
     return jsonify(result)
 
+# Obtener todos las Farmacias
+@app.route("/api/farmacias")
+def get_farmacias():
+    farmacias = Cartilla.query.filter_by(is_element="3").all()
+    # Serialize the queryset
+    result = cartillas_schema.dump(farmacias)
+    return jsonify(result)
+
+# Obtener todos los Medicamentos
+@app.route("/api/medicamentos")
+def get_medicamentos():
+    medicamentos = Cartilla.query.filter_by(is_element="1").all()
+    # Serialize the queryset
+    result = cartillas_schema.dump(medicamentos)
+    return jsonify(result)
+    
+
 # Crear un nuevo Medico
 @app.route("/api/medicos", methods=['POST'])
 def add_medico():
@@ -334,7 +351,6 @@ def add_medico():
     matricula = request.json['matricula']
     especialidad = request.json['especialidad']
     hospital = request.json['hospital']
-    hospital_id = Cartilla.query.filter_by(nombre=hospital).first()
     correo = request.json['correo']
     password = request.json['password']
 
@@ -342,7 +358,7 @@ def add_medico():
                     cuit=cuit,
                     matricula=matricula,
                     especialidad=especialidad,
-                    hospital_id=hospital_id,
+                    hospital=hospital,
                     correo=correo,
                     password=password)
     db.session.add(new_med)

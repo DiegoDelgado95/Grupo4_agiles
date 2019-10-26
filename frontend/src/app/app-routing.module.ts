@@ -7,6 +7,8 @@ import { OrderFormComponent } from './components/order-form/order-form.component
 import { VerOrdenComponent } from "./components/ver-orden/ver-orden.component";
 import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
 import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component';
+import { VerCartillaComponent } from './components/ver-cartilla/ver-cartilla.component';
+
 
 const routes: Routes = [
   { path: '',
@@ -40,6 +42,10 @@ const routes: Routes = [
   {
     path: 'cartilla',
     component: MultipleFormOBSComponent
+  },
+  {
+    path: 'verCartilla',
+    component: VerCartillaComponent
   }
 ];
 
