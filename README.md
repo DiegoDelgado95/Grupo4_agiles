@@ -41,7 +41,9 @@ export FLASK_ENV=development
 - Ahora pasamos a crear las tablas, esto lo hacemos corriendo:
 
 flask db init
+
 flask db migrate
+
 flask db upgrade
 - Y corremos el backend
 
