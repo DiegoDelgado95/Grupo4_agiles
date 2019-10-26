@@ -1,0 +1,90 @@
+
+<div class="col-md-6 offset-md-3">
+    <div class="card-body" >
+
+		<div class="card-header  bg-secondary text-white">
+            <h3>Agregar médico </h3>
+        </div>  
+
+	<div class="form-row" >
+            <div class="form-group col-md-4">
+                <label for="Nombre">Nombre y Apellido</label>
+                <input type="text" name="name" class="form-control" placeholder="Patricia Quiroga" required autofocus>
+            </div>
+
+            <div class="form-group col-md-4">            
+                <label for="Cuit">Cuit</label>
+                <input type="text" name="Cuit" class="form-control" placeholder="20398804050" required autofocus>
+            </div>
+
+            <div class="form-group col-md-4">            
+                <label for="Cuit">Matricula</label>
+                <input type="text" name="Matricula" class="form-control" placeholder="" required autofocus>
+            </div>
+
+            <div class="form-group col-md-4">            
+                <label for="Cuit">Hospital</label>
+                <input type="text" name="Cuit" class="form-control" placeholder="San Martin">
+            </div>
+
+            <div class="form-group col-md-4 field-label-responsive">            
+                <label for="Cuit">Email de acceso</label>
+                 <input type="text" name="emailAddress" id="email" class="form-control" placeholder="you@Osme.com" required autofocus>
+
+            </div>
+
+           <div class="form-group col-md-4">            
+               <label >Especialidad:</label>
+	            <select class="form-control">
+    	            <option value="selec">seleccionar..</option>
+        	        <option value="Medicamento">Clinico</option>
+            	    <option value="Hospital">Traumatologo</option>
+                	<option value="Farmacia">Analisis</option>
+            	</select>
+            </div>
+			</div>
+        
+            <button type="submit" class="btn btn-primary"  data-dismiss="modal" data-toggle="modal" data-target="#Guardarbtn">
+                  Guardar</button>
+		   	                    </div>
+
+</div>  
+
+<script type="text/javascript">
+
+$('#validateForm').bootstrapValidator({
+feedbackIcons: {
+	valid: 'glyphicon glyphicon-ok',
+	invalid: 'glyphicon glyphicon-remove',
+	validating: 'glyphicon glyphicon-refresh'
+},
+fields: {
+	name: {
+		validators: {
+			stringLength: {
+				min: 5,
+				message: 'Please Enter your Full name with minimum 5 letters length'
+			},
+			notEmpty: {
+				message: 'Please Enter your Full name'
+			}
+		}
+		},
+	emailAddress: {
+		validators: {
+			stringLength: {
+				min: 15,
+				max: 100,
+				message:'Please enter at least 15 characters and no more than 100'
+			},
+			notEmpty: {
+				message: 'Please Enter Address'
+			}
+		}
+	}
+	}
+});
+	
+	
+</script>
+
