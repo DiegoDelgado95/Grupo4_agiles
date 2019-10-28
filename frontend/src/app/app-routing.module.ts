@@ -7,6 +7,7 @@ import { OrderFormComponent } from './components/order-form/order-form.component
 import { VerOrdenComponent } from "./components/ver-orden/ver-orden.component";
 import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
 import { FormularioCargaMedicoComponent } from './components/formulario-carga-medico/formulario-carga-medico.component';
+import { FormularioPruebaComponent } from './components/formulario-prueba/formulario-prueba.component';
 
 
 
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'formularioMed',
     component: FormularioCargaMedicoComponent
+  }, 
+  {
+  path: 'formularioPrue',
+    component: FormularioPruebaComponent
   }
   
 ];
