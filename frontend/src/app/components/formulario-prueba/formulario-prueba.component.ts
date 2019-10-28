@@ -29,6 +29,7 @@ export class FormularioPruebaComponent implements OnInit {
       especialidad: new FormControl('')
     });
   }
+
   
 
   onSubmit() {
