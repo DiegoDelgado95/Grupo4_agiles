@@ -19,7 +19,7 @@ export class MedicoService {
   }
 
   //Agrego un nuevo medico
-  saveItem(medico: Medico){
+  saveMedico(medico: Medico){
     return this.http.post(`${this.API_URI}/medicos`, medico);
   }
 }
