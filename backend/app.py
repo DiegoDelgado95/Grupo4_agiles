@@ -274,14 +274,14 @@ def update_order():
     estado = request.json['estado']
 
     #Datos del medico que realizo el cambio
-    medico_id = request.json['medico_id']
+    medico = request.json['medico']
     observacion = request.json['observacion']
     descuento = request.json['descuento']
 
     #Update
     update_order = Orden.query.filter_by(id=id).first()
     update_order.estado = estado
-    update_order.medico_id = medico_id
+    update_order.medico = medico
     update_order.observacion = observacion
     update_order.descuento = descuento
 

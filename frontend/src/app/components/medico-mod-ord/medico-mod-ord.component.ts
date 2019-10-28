@@ -8,6 +8,7 @@ import { OrderService } from 'src/app/services/order.service';
 //Interfaces
 import { Order } from 'src/app/models/order';
 import { User } from 'src/app/models/user';
+import { Medico } from 'src/app/models/medico';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { User } from 'src/app/models/user';
 export class MedicoModOrdComponent implements OnInit {
 
   orders:any=[];
-  modalMedico:User;
+  modalMedico:Medico;
 
   modalUser:User={
     first_name:'',
@@ -30,7 +31,7 @@ export class MedicoModOrdComponent implements OnInit {
     estado: '',
     descuento:'',
     observacion: '',
-    medico_id: 0,
+    medico: '',
   }
   
 
@@ -76,7 +77,7 @@ export class MedicoModOrdComponent implements OnInit {
 
   //Editar una orden por el medico
   editOrderMedico(){
-    this.modalOrder.medico_id = this.modalMedico.id
+    this.modalOrder.medico = this.modalMedico.nombre
     this._orderService.updateOrder(this.modalOrder).subscribe(res => {
     },
       err => console.error(err)
