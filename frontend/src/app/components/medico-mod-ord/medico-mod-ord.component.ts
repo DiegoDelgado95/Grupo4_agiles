@@ -38,13 +38,14 @@ export class MedicoModOrdComponent implements OnInit {
   constructor(private _userService:UserService, private _orderService: OrderService, private router:Router) { }
 
   ngOnInit() {
+    this.modalMedico = this._userService.getCurrentUser();
     this.getOrders()
   }
 
 
   //Obtengo TODAS la Ordenes para listar en la tabla
   getOrders(){
-    this._orderService.getOrders().subscribe(res => {
+    this._orderService.getOrdersMed(this.modalMedico.nombre).subscribe(res => {
       this.orders = res
     },
     err => console.error(err)

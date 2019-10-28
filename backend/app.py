@@ -242,7 +242,14 @@ def get_ordenes():
 def get_ordenes_user(pk):
     ordenes = Orden.query.filter_by(user_id=pk)
     result = ordenes_schema.dump(ordenes)
-    return jsonify(result)      
+    return jsonify(result)     
+
+#Obtener todas las ordenes de un usuario
+@app.route("/api/ordersmed/<string:pk>", methods=['GET'])
+def get_ordenes_med(pk):
+    ordenes = Orden.query.filter_by(medico=pk)
+    result = ordenes_schema.dump(ordenes)
+    return jsonify(result)   
 
 
 #Crear una nueva Orden, del user

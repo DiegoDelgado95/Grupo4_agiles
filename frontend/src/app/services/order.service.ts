@@ -19,6 +19,10 @@ export class OrderService {
     return this.http.get(`${this.API_URI}/order`);
   }
 
+  //Obtengo todas las ordenes de un medico
+  getOrdersMed(nombre:string){
+    return this.http.get(`${this.API_URI}/ordersmed/${nombre}`);
+  }
   //Obtengo todas las ordenes del usuario logeado
   getOrderUser(id:number){
     return this.http.get(`${this.API_URI}/orders/${id}`);
