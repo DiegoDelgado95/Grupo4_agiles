@@ -16,8 +16,7 @@ import { VerOrdenComponent } from './components/ver-orden/ver-orden.component';
 import { CommonModule } from '@angular/common';
 import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
 import { FormularioCargaMedicoComponent } from './components/formulario-carga-medico/formulario-carga-medico.component';
-import { FormularioPruebaComponent } from './components/formulario-prueba/formulario-prueba.component';
-
+import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component'
 
 
 @NgModule({
@@ -31,7 +30,7 @@ import { FormularioPruebaComponent } from './components/formulario-prueba/formul
     VerOrdenComponent,	
     MedicoModOrdComponent,
     FormularioCargaMedicoComponent,
-	FormularioPruebaComponent
+    MultipleFormOBSComponent
     
     
   ],

@@ -105,7 +105,8 @@ class Cartilla(db.Model):
         switcher = {
             'Medicamento': 1,
             'Hospital': 2,
-            'Farmacia': 3
+            'Farmacia': 3,
+            '' : 0
         }
         return switcher.get(argument)
 
