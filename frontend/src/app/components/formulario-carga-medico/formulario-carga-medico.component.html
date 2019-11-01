@@ -110,89 +110,97 @@
 		</form>
 	  
 		<!-- Modal -->
-		<div class="modal fade " id="confirm-submit" tabindex="-1" role="dialog" 
+		<div class="modal" id="confirm-submit" tabindex="-1" role="dialog" 
 		aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-notify modal-danger">
-			<div class="modal-content">
-			  <div class="container form-group col-lg-12">
-				<div>
-				  Médico
-				</div>
-				<div class="modal-body">
-	  
-				  <!-- We display the details entered by the user here -->
-				  <table class="table table-hover">
-					<tr>
-					  <th scope="col">  <p><b>Nombre y Apellido </b></p></th>
-					  <td id="lname">
-						<strong>{{miFormulario.value.username}} </strong>
-					  </td>
-					</tr>
-					<tr>
-					  <th>Cuit</th>
-					  <td id="fname">
-						<strong>{{miFormulario.value.cuit}} </strong>
-					  </td>
-					</tr>
-					<tr>
-					  <th>Matricula</th>
-					  <td id="fname">
-						<strong>{{miFormulario.value.matricula}} </strong>
-					  </td>
-					</tr>
-					<tr>
-					  <th>Correo</th>
-					  <td id="fname">
-						<strong>{{miFormulario.value.correo}} </strong>
-					  </td>
-					</tr>
-					<tr>
-					  <th>Hospital</th>
-					  <td id="fname">
-						<strong>{{miFormulario.value.hospital}} </strong>
-					  </td>
-					</tr>
-					<tr>
-					  <th>Especialidad</th>
-					  <td id="fname">
-						<strong>{{miFormulario.value.especialidad}} </strong>
-					  </td>
-					</tr>
-				  </table>
-	  
+
+		<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+						
+				  </div>
+				  <div class="alert alert-danger" role="alert" >
+						¿ Está Seguro de dar de alta estos datos ? 
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					  </div>
+				  <div class="modal-body small">
+					  <form class="well well-sm ">
+						<ul class="list-group ">Detalle Carga de Medico:</ul>					
+						  <li class="list-group-item"><b>Nombre y Apellido:&nbsp;&nbsp;</b> 
+							<i>{{miFormulario.value.username}}</i></li>
+						  <li class="list-group-item"><b>Cuit:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i> {{miFormulario.value.cuit}}</i></li>
+						  <li class="list-group-item"><b>Matricula:&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i> {{miFormulario.value.matricula}}</i></li>
+						  <li class="list-group-item"><b>Correo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i> {{miFormulario.value.correo}}</i></li>
+						  <li class="list-group-item"><b>Hospital:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i>{{miFormulario.value.hospital}}</i> </li>
+						  <li class="list-group-item"><b>Especialidad:&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i> {{miFormulario.value.especialidad}}</i></li>
+						  <br>
+						  					  
+						</form>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
+					<button type="button" class="btn btn-primary" rounded="true" data-toggle="modal"
+					 data-target="#modalConfirmDelete" data-dismiss = "modal" (click)="saveNewMedico()">Aceptar</button>
+				  </div>
 				</div>
 			  </div>
-			  <div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
-				<button class="btn btn-primary" type="submit" rounded="true" data-toggle="modal" data-target="#modalConfirmDelete">Aceptar</button>
-			  </div>
-			</div>
-		  </div>
-		</div> <!-- Fin modal-->
+		</div> <!-- FIN MODAL -->
+		
 	  
 		<!--Modal: modalConfirmDelete-->
 		<div div class="modal fade " id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document" >
-			<!--Content-->
-			<div class="modal-content text-center">
-			  <!--Header-->
-			  <div class="modal-header d-flex justify-content-center">
-				<p class="heading">Are you sure?</p>
-			  </div>
-	  
-			  <!--Body-->
-			  <div class="modal-body">
-				<i class="fas fa-spinner fa-pulse"></i>
-			  </div>
-	  
-			  <!--Footer-->
-			  <div class="modal-footer flex-center">
-				<a type="button" (click)="saveNewMedico()" class="btn btn-outline-danger">Yes</a>
-				<a type="button" class="btn btn-danger waves-effect" data-dismiss="modal">No</a>
-			  </div>
+			<div class="modal-dialog modal-confirm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="icon-box">
+							<i class="material-icons">&#xE876;</i>
+						</div>				
+						<h4 class="modal-title">Carga Satisfactoria del medico: </h4>	
+					</div>
+					<div class="modal-body">
+							<br>
+							 <tr>
+							<th scope="col">  <p><b>Nombre y Apellido: &nbsp;&nbsp; </b></p></th>
+							<td id="lname">
+							  <i>{{miFormulario.value.username}} </i>
+							</td>
+						  </tr>
+						  <tr>
+						  <th scope="col">  <p><b>Cuit : </b></p></th>
+							<td id="lname">
+							
+							<i> {{miFormulario.value.cuit}}</i>
+							</td>
+						</tr>
+					</div>
+					<div class="modal-footer">
+						<button  type="reset"  class="btn btn-success btn-block" data-dismiss="modal" ng-click="reset()">OK</button>
+						<!-- Ver como reset al primer modal, de mi formulario desde Ok.-->
+					</div>
+				</div>
 			</div>
-			<!--/.Content-->
-		  </div>
+			<div class="modal-dialog modal-confirm" id="">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="icon-No">
+								<i class="material-icons">&#xE5CD;</i>
+							</div>				
+							<h4 class="modal-title">Sorry!</h4>	
+						</div>
+						<div class="modal-body">
+							<p class="text-center">No se pudo cargar el Medico, por X motivo.</p>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-danger btn-block" data-dismiss="modal" ng-click="reset()">OK</button>
+						</div>
+					</div>
+				</div>
 		</div>
 		<!--Modal: modalConfirmDelete-->
 	  </div>
