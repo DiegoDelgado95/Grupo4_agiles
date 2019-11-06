@@ -1,0 +1,97 @@
+<div class="">
+        <div class="card">
+            <div class="card-header">
+                <h3>Cartilla Medica</h3>
+            </div>
+            <form class="card-body">
+        
+        <div class="col-xs-4">
+        <label>Seleccione que desea cargar en la cartilla:</label>
+        <select [(ngModel)]="tipo" [ngModelOptions]="{standalone: true}" class="form-control">
+            <option value="Medicamento">Medicamento</option>
+            <option value="Hospital">Hospital</option>
+            <option value="Farmacia">Farmacia</option>
+            <option value="Medico">Medico</option>
+        </select>
+        <br>
+        </div>
+    <br>
+    <div *ngIf="tipo === 'Medico'">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Especialidad</th>
+            <th scope="col">Hospital</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let medico of medicos">
+            <th scope="row">#</th>
+            <td>{{ medico.nombre }}</td>
+            <td>{{ medico.especialidad }}</td>
+            <td>{{ medico.hospital }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+        <div *ngIf="tipo === 'Hospital'">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Telefono</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let hospital of hospitales">
+            <th scope="row">#</th>
+            <td>{{ hospital.nombre }}</td>
+            <td><a href="https://www.google.com/maps/search/?api=1&query={{ hospital.nombre }}" target="_blank">{{ hospital.direccion }}</a></td>
+            <td>{{ hospital.telefono }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <div *ngIf="tipo === 'Farmacia'">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let farmacia of farmacias">
+                <th scope="row">#</th>
+                <td>{{ farmacia.nombre }}</td>
+                <td><a href="https://www.google.com/maps/search/?api=1&query={{ farmacia.direccion }}" target="_blank">{{ farmacia.direccion }}</a></td>
+                <td>{{ farmacia.telefono }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="tipo === 'Medicamento'">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let medicamento of medicamentos">
+                <th scope="row">#</th>
+                <td>{{ medicamento.nombre }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </form>
+</div>
+</div>

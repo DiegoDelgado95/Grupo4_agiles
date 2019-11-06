@@ -15,9 +15,9 @@ import { OrderFormComponent } from './components/order-form/order-form.component
 import { VerOrdenComponent } from './components/ver-orden/ver-orden.component';
 import { CommonModule } from '@angular/common';
 import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
+import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component';
+import { VerCartillaComponent } from './components/ver-cartilla/ver-cartilla.component';
 import { FormularioCargaMedicoComponent } from './components/formulario-carga-medico/formulario-carga-medico.component';
-import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component'
-
 
 @NgModule({
   declarations: [
@@ -29,10 +29,9 @@ import { MultipleFormOBSComponent } from './components/multiple-form-obs/multipl
     OrderFormComponent,
     VerOrdenComponent,	
     MedicoModOrdComponent,
-    FormularioCargaMedicoComponent,
-    MultipleFormOBSComponent
-    
-    
+    MultipleFormOBSComponent,
+    VerCartillaComponent,
+    FormularioCargaMedicoComponent
   ],
   imports: [
 	BrowserModule,
