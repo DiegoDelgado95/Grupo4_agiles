@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
@@ -8,6 +8,8 @@ import { VerOrdenComponent } from "./components/ver-orden/ver-orden.component";
 import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
 import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component';
 import { VerCartillaComponent } from './components/ver-cartilla/ver-cartilla.component';
+import { FormularioCargaMedicoComponent } from './components/formulario-carga-medico/formulario-carga-medico.component';
+
 
 
 const routes: Routes = [
@@ -40,6 +42,10 @@ const routes: Routes = [
     component: MedicoModOrdComponent
   },
   {
+    path: 'formularioMed',
+    component: FormularioCargaMedicoComponent
+  },
+  {
     path: 'cartilla',
     component: MultipleFormOBSComponent
   },
@@ -47,6 +53,7 @@ const routes: Routes = [
     path: 'verCartilla',
     component: VerCartillaComponent
   }
+  
 ];
 
 @NgModule({

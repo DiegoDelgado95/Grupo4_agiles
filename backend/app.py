@@ -105,7 +105,8 @@ class Cartilla(db.Model):
         switcher = {
             'Medicamento': 1,
             'Hospital': 2,
-            'Farmacia': 3
+            'Farmacia': 3,
+            '' : 0
         }
         return switcher.get(argument)
 
@@ -242,7 +243,14 @@ def get_ordenes():
 def get_ordenes_user(pk):
     ordenes = Orden.query.filter_by(user_id=pk)
     result = ordenes_schema.dump(ordenes)
-    return jsonify(result)      
+    return jsonify(result)     
+
+#Obtener todas las ordenes de un usuario
+@app.route("/api/ordersmed/<string:pk>", methods=['GET'])
+def get_ordenes_med(pk):
+    ordenes = Orden.query.filter_by(medico=pk)
+    result = ordenes_schema.dump(ordenes)
+    return jsonify(result)   
 
 
 #Crear una nueva Orden, del user
@@ -255,9 +263,10 @@ def add_order():
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], unique_filename))
     #Datos del form order user
     tipo = request.form['tipo']
+    medico = request.form['medico']
     user_id = int(request.form['user_id'])
     data = "http://localhost/images/"+unique_filename
-    new_orden = Orden(tipo=tipo,data=data,user_id=user_id)
+    new_orden = Orden(tipo=tipo,data=data,user_id=user_id,medico=medico)
     db.session.add(new_orden)
     db.session.commit()
 
@@ -273,14 +282,14 @@ def update_order():
     estado = request.json['estado']
 
     #Datos del medico que realizo el cambio
-    medico_id = request.json['medico_id']
+    medico = request.json['medico']
     observacion = request.json['observacion']
     descuento = request.json['descuento']
 
     #Update
     update_order = Orden.query.filter_by(id=id).first()
     update_order.estado = estado
-    update_order.medico_id = medico_id
+    update_order.medico = medico
     update_order.observacion = observacion
     update_order.descuento = descuento
 

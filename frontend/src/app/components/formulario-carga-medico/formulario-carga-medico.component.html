@@ -1,0 +1,207 @@
+<div class="container form-group col-lg-12">
+		<form [formGroup]="miFormulario" (ngSubmit)="onSubmit()">
+		  <div class="form-row">
+	  
+			<div class="form-group col-md-4">
+			  <label>Nombre y Apellido:</label>
+			  <input type="text" [(ngModel)]="medico.nombre" name="name" class="form-control" placeholder="Patricia Suarez"
+				[class.is-valid]="miFormulario.get('username').touched && miFormulario.get('username').valid"
+				[class.is-invalid]="miFormulario.get('username').touched && miFormulario.get('username').invalid"
+				formControlName="username" />
+			  <div *ngIf="miFormulario.get('username').errors && ( miFormulario.get('username').dirty || miFormulario.get('username').invalid)">
+				<small *ngIf=" miFormulario.get('username').hasError('required')" class="form-text text-muted ">Campo requerido</small>
+				<small *ngIf=" miFormulario.get('username').hasError('minlength')" class="form-text text-muted"> El nombre > a 3</small>
+			  </div>
+			</div>
+			<br>
+	  
+			<div class="form-group col-md-4">
+			  <label>Cuit:</label> 
+			  <input type="cuit" [(ngModel)]="medico.cuit" name="cuit" class="form-control" placeholder="20999872780"
+				[class.is-valid]="miFormulario.get('cuit').touched && miFormulario.get('cuit').valid"
+				[class.is-invalid]="miFormulario.get('cuit').touched && miFormulario.get('cuit').invalid"
+				formControlName="cuit" />
+			  <div *ngIf="miFormulario.get('cuit').errors && miFormulario.get('cuit').invalid">
+				<small *ngIf=" miFormulario.get('cuit').hasError('required')" class="form-text text-muted">Campo requerido</small>
+				<small *ngIf=" miFormulario.get('cuit').hasError('minlength')" class="form-text text-muted"> El cuit > a 5</small>
+				<small *ngIf=" miFormulario.get('cuit').hasError('pattern')" class="form-text text-muted"> El cuit contiene solo numeros</small>
+			  </div>
+			</div>
+			<br>
+	  
+			<div class="form-group col-md-4">
+			  <label>Matricula: </label>
+			  <input type="matricula" class="form-control" placeholder="12345678" [(ngModel)]="medico.matricula" name="matricula"
+				[class.is-valid]="miFormulario.get('matricula').touched && miFormulario.get('matricula').valid"
+				[class.is-invalid]="miFormulario.get('matricula').touched && miFormulario.get('matricula').invalid"
+				formControlName="matricula" />
+			  <div *ngIf="miFormulario.get('matricula').errors && miFormulario.get('matricula').invalid">
+				<small *ngIf=" miFormulario.get('matricula').hasError('required')" class="form-text text-muted">Campo requerido</small>
+				<small *ngIf=" miFormulario.get('matricula').hasError('minlength')" class="form-text text-muted"> La matricula > a 5</small>
+				<small *ngIf=" miFormulario.get('matricula').hasError('pattern')" class="form-text text-muted"> La matricula contiene solo numeros</small>
+			  </div>
+			</div>
+			<br>
+	  
+			<div class="form-group col-md-4">
+			  <label>Correo:</label> 
+			  <input type="correo" class="form-control" placeholder="abc@osme.com" [(ngModel)]="medico.correo" name="correo"
+				[class.is-valid]="miFormulario.get('correo').touched && miFormulario.get('correo').valid"
+				[class.is-invalid]="miFormulario.get('correo').touched && miFormulario.get('correo').invalid"
+				formControlName="correo" />
+			  <div *ngIf="miFormulario.get('correo').errors && miFormulario.get('correo').invalid">
+				<small *ngIf=" miFormulario.get('correo').hasError('required')" class="form-text text-muted">Campo requerido</small>
+				<small *ngIf=" miFormulario.get('correo').hasError('email')" class="form-text text-muted"> Debe Respetar el formato abc@osme.com</small>
+			  </div>
+			</div>
+			<br>
+	  
+			<div class="form-group col-md-4">
+			  <label>Password:</label>
+			  <input type="password" class="form-control" [(ngModel)]="medico.password" name="password"
+				[class.is-valid]="miFormulario.get('password').touched && miFormulario.get('password').valid"
+				[class.is-invalid]="miFormulario.get('password').touched && miFormulario.get('password').invalid"
+				formControlName="password" />
+				<div *ngIf="miFormulario.get('password').errors && miFormulario.get('password').invalid">
+				  <small *ngIf=" miFormulario.get('password').hasError('required')" class="form-text text-muted">Campo requerida</small>
+				  <small *ngIf=" miFormulario.get('password').hasError('minlength')" class="form-text text-muted"> La Password = a 8</small>
+				  <small *ngIf=" miFormulario.get('password').hasError('pattern')" class="form-text text-muted"> La Password contiene solo letras</small>
+				</div>
+			  </div>
+			  <br>
+	  
+			<div class="form-group col-md-4">
+			  <label> Hospital:</label>
+			  <!--<input type="hospital" class="form-control" [(ngModel)]="medico.hospital" name="hospital"
+			  formControlName="hospital" /> -->
+			  <select formControlName="hospital" [(ngModel)]="medico.hospital" name="hospital" class="form-control">
+				<option selected>Seleccionar..</option>
+				<option *ngFor="let hospital of hospitales">{{ hospital.nombre }}</option>
+			  </select>
+			</div>
+			<br>
+	  
+			<div class="form-group col-md-4">
+			  <label> Especialidad:</label> 
+			  <select formControlName="especialidad" class="form-control" [(ngModel)]="medico.especialidad" name="especialidad">
+				<option selected>Seleccionar..</option>
+				<option> Clinico</option>
+				<option> Analisis</option>
+				<option> Traumatologo</option>
+			  </select>
+			</div>
+			<br>
+	  
+		  </div>
+		  <div>
+			<div class="col-md-2 col-xs-4">
+			  <button class="btn btn-primary btn-responsive" [disabled]="!miFormulario.valid" type="submit" 
+			  rounded="true" data-toggle="modal" data-target="#confirm-submit">
+				Enviar
+			  </button>
+			</div>
+			<div class="col-md-2 col-xs-4">
+			  <button type="reset" class="btn btn-primary btn-danger"
+					  ng-click="reset()">
+				Reset
+			  </button>
+			</div>
+		  </div>
+		</form>
+	  
+		<!-- Modal -->
+		<div class="modal" id="confirm-submit" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
+
+		<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+						
+				  </div>
+				  <div class="alert alert-danger" role="alert" >
+						¿ Está Seguro de dar de alta estos datos ? 
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					  </div>
+				  <div class="modal-body small">
+					  <form class="well well-sm ">
+						<ul class="list-group ">Detalle Carga de Medico:</ul>					
+						  <li class="list-group-item"><b>Nombre y Apellido:&nbsp;&nbsp;</b> 
+							<i>{{miFormulario.value.username}}</i></li>
+						  <li class="list-group-item"><b>Cuit:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i> {{miFormulario.value.cuit}}</i></li>
+						  <li class="list-group-item"><b>Matricula:&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i> {{miFormulario.value.matricula}}</i></li>
+						  <li class="list-group-item"><b>Correo:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i> {{miFormulario.value.correo}}</i></li>
+						  <li class="list-group-item"><b>Hospital:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i>{{miFormulario.value.hospital}}</i> </li>
+						  <li class="list-group-item"><b>Especialidad:&nbsp;&nbsp;&nbsp;&nbsp;</b>
+							<i> {{miFormulario.value.especialidad}}</i></li>
+						  <br>
+						  					  
+						</form>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Volver</button>
+					<button type="button" class="btn btn-primary" rounded="true" data-toggle="modal"
+					 data-target="#modalConfirmDelete" data-dismiss = "modal" (click)="saveNewMedico()">Aceptar</button>
+				  </div>
+				</div>
+			  </div>
+		</div> <!-- FIN MODAL -->
+		
+	  
+		<!--Modal: modalConfirmDelete-->
+		<div div class="modal fade " id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div *ngIf="check === 'ok'" class="modal-dialog modal-confirm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="icon-box">
+							<i class="material-icons">&#xE876;</i>
+						</div>				
+						<h4 class="modal-title">Carga Satisfactoria del medico: </h4>	
+					</div>
+					<div class="modal-body">
+							<br>
+							 <tr>
+							<th scope="col">  <p><b>Nombre y Apellido: &nbsp;&nbsp; </b></p></th>
+							<td id="lname">
+							  <i>{{miFormulario.value.username}} </i>
+							</td>
+						  </tr>
+						  <tr>
+						  <th scope="col">  <p><b>Cuit : </b></p></th>
+							<td id="lname">
+							
+							<i> {{miFormulario.value.cuit}}</i>
+							</td>
+						</tr>
+					</div>
+					<div class="modal-footer">
+						<button  type="reset"  class="btn btn-success btn-block" data-dismiss="modal" (click)="reset()">OK</button>
+						<!-- Ver como reset al primer modal, de mi formulario desde Ok.-->
+					</div>
+				</div>
+			</div>
+			<div *ngIf="check === 'not ok'" class="modal-dialog modal-confirm" id="">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="icon-No">
+								<i class="material-icons">&#xE5CD;</i>
+							</div>				
+							<h4 class="modal-title">Sorry!</h4>	
+						</div>
+						<div class="modal-body">
+							<p class="text-center">Hubo un error y no se pudo cargar el Medico.</p>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-danger btn-block" data-dismiss="modal" (click)="reset()">OK</button>
+						</div>
+					</div>
+				</div>
+		</div>
+		<!--Modal: modalConfirmDelete-->
+	  </div>
+	  

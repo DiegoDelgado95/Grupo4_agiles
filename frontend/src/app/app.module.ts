@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+ 
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-ord.component';
 import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component';
 import { VerCartillaComponent } from './components/ver-cartilla/ver-cartilla.component';
+import { FormularioCargaMedicoComponent } from './components/formulario-carga-medico/formulario-carga-medico.component';
 
 @NgModule({
   declarations: [
@@ -25,15 +27,16 @@ import { VerCartillaComponent } from './components/ver-cartilla/ver-cartilla.com
     HomeComponent,
     LoginFormComponent,
     OrderFormComponent,
-    VerOrdenComponent,
+    VerOrdenComponent,	
     MedicoModOrdComponent,
     MultipleFormOBSComponent,
-    VerCartillaComponent
+    VerCartillaComponent,
+    FormularioCargaMedicoComponent
   ],
   imports: [
-    BrowserModule,
+	BrowserModule,
+    FormsModule,	
     ReactiveFormsModule,
-    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     CommonModule
