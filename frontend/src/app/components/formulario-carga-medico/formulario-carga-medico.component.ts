@@ -22,6 +22,7 @@ export class FormularioCargaMedicoComponent implements OnInit {
       password: ''
       }
     miFormulario: FormGroup;
+    check:string;
 
   constructor(private cartillaService:CartillaService, 
               private route:Router, 
@@ -56,10 +57,14 @@ export class FormularioCargaMedicoComponent implements OnInit {
     this.medicoService.saveMedico(this.medico).subscribe(
       res => {
         console.log(res);
-        alert("Medico cargado con exito");
-        this.route.navigate(['/']);
+        this.check = 'ok';
+        /*alert("Medico cargado con exito");
+        this.route.navigate(['/']);*/
       },
-      err => console.error(err)
+      err => { 
+        console.error(err)
+        this.check = 'not ok';
+      } 
     )
   }
   getHospitales(){

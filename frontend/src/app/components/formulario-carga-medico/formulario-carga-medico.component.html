@@ -155,7 +155,7 @@
 	  
 		<!--Modal: modalConfirmDelete-->
 		<div div class="modal fade " id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-confirm">
+			<div *ngIf="check === 'ok'" class="modal-dialog modal-confirm">
 				<div class="modal-content">
 					<div class="modal-header">
 						<div class="icon-box">
@@ -180,12 +180,12 @@
 						</tr>
 					</div>
 					<div class="modal-footer">
-						<button  type="reset"  class="btn btn-success btn-block" data-dismiss="modal" ng-click="reset()">OK</button>
+						<button  type="reset"  class="btn btn-success btn-block" data-dismiss="modal" (click)="reset()">OK</button>
 						<!-- Ver como reset al primer modal, de mi formulario desde Ok.-->
 					</div>
 				</div>
 			</div>
-			<div class="modal-dialog modal-confirm" id="">
+			<div *ngIf="check === 'not ok'" class="modal-dialog modal-confirm" id="">
 					<div class="modal-content">
 						<div class="modal-header">
 							<div class="icon-No">
