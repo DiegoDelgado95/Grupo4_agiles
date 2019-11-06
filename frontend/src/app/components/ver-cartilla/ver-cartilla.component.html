@@ -50,7 +50,7 @@
             <tr *ngFor="let hospital of hospitales">
             <th scope="row">#</th>
             <td>{{ hospital.nombre }}</td>
-            <td>{{ hospital.direccion }}</td>
+            <td><a href="https://www.google.com/maps/search/?api=1&query={{ hospital.nombre }}" target="_blank">{{ hospital.direccion }}</a></td>
             <td>{{ hospital.telefono }}</td>
             </tr>
         </tbody>
@@ -70,7 +70,7 @@
                 <tr *ngFor="let farmacia of farmacias">
                 <th scope="row">#</th>
                 <td>{{ farmacia.nombre }}</td>
-                <td>{{ farmacia.direccion }}</td>
+                <td><a href="https://www.google.com/maps/search/?api=1&query={{ farmacia.direccion }}" target="_blank">{{ farmacia.direccion }}</a></td>
                 <td>{{ farmacia.telefono }}</td>
                 </tr>
             </tbody>

@@ -57,6 +57,8 @@
               </th>
               <th class="th-sm">Tipo
               </th>
+              <th class="th-sm">Medico
+              </th>
               <th class="th-sm">Estado
               </th>
               <th class="th-sm">Observacion
@@ -69,6 +71,7 @@
           <tr *ngFor="let order of orders">
             <th scope="row">{{ order.fecha | date: 'yyyy-MM-dd'}}</th>
             <td>{{ order.tipo }}</td>
+            <td>{{ order.medico }}</td>
             <td [ngClass]="{'btn-primary':order.estado=='Pendiente','btn-success':order.estado=='aceptada','btn-danger':order.estado=='rechazada'}">{{ order.estado}}</td>
             <td>{{ order.observacion }}</td>
             <td><a href="{{ order.data}}">Ver</a></td>

@@ -85,7 +85,7 @@ class Orden(db.Model):
     #Paciente
     user_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
     #Medico
-    medico_id = db.Column(db.Integer, db.ForeignKey('medicos.id'), nullable=True)
+    medico = db.Column(db.String(60), db.ForeignKey('medicos.nombre'), nullable=True)
     observacion = db.Column(db.String(300))
     descuento = db.Column(db.String(60))
 
@@ -166,7 +166,7 @@ users_schema = UserSchema(many=True)
 ## ORDEN SCHEMA ##
 class OrdenSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'data', 'estado', 'tipo', 'fecha', 'user_id', 'medico_id', 'observacion', 'descuento')
+        fields = ('id', 'data', 'estado', 'tipo', 'fecha', 'user_id', 'medico', 'observacion', 'descuento')
 
     @post_load
     def make_order(self, data, **kwargs):
