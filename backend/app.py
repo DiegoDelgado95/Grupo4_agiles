@@ -105,7 +105,8 @@ class Cartilla(db.Model):
         switcher = {
             'Medicamento': 1,
             'Hospital': 2,
-            'Farmacia': 3
+            'Farmacia': 3,
+            '' : 0
         }
         return switcher.get(argument)
 
@@ -342,7 +343,6 @@ def add_medico():
     matricula = request.json['matricula']
     especialidad = request.json['especialidad']
     hospital = request.json['hospital']
-    hospital_id = Cartilla.query.filter_by(nombre=hospital).first()
     correo = request.json['correo']
     password = request.json['password']
 
@@ -350,7 +350,7 @@ def add_medico():
                     cuit=cuit,
                     matricula=matricula,
                     especialidad=especialidad,
-                    hospital_id=hospital_id,
+                    hospital=hospital,
                     correo=correo,
                     password=password)
     db.session.add(new_med)

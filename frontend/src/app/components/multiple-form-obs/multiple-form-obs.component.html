@@ -32,7 +32,8 @@
                 <input *ngIf="cartilla.tipo === 'Hospital'" class="btn btn-primary btn-lg btn-block" (click)="saveNewItem()" type="submit" value="Agregar Hospital">
         </div>
         <div *ngIf="cartilla.tipo === 'Medico'">
-            <label>Nombre: </label>
+            <app-formulario-carga-medico></app-formulario-carga-medico>
+            <!--<label>Nombre: </label>
             <input type="text" [(ngModel)]="cartilla.nombre" type="text" [ngModelOptions]="{standalone: true}" class="form-control">
             <label>Especialidad:</label> 
             <input type="text" class="form-control">
@@ -41,7 +42,7 @@
                 <option *ngFor="let hospital of hospitales">{{ hospital.nombre }}</option>
             </select>
             <br>
-            <input class="btn btn-primary btn-lg btn-block" (click)="saveNewItem()" type="submit" value="Agregar Medico">
+            <input class="btn btn-primary btn-lg btn-block" (click)="saveNewItem()" type="submit" value="Agregar Medico"> -->
         </div>
         </form>
     </div>
