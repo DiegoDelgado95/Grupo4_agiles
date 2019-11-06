@@ -95,7 +95,7 @@ class Cartilla(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(60), index=True, unique=True)
-    direccion = db.Column(db.String(60), index=True, unique=True)
+    direccion = db.Column(db.String(200), index=True, unique=True)
     telefono = db.Column(db.String(60), index=True, unique=True)
     ## 1 - medicamento / 2 - Hospital / 3 - Farmacia / el medico lo cargamos del otro formulario de registro ##
     is_element = db.Column(db.Integer, index=True) 

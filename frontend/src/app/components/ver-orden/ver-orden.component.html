@@ -18,9 +18,9 @@
             <label>Estado: </label>
             <div class="form-group pr-4"> 
               <select  class="form-control">
-                <option value="pendiente">Pendiente</option>
-                <option value="aceptada">Aceptada</option>
-                <option value="rechazada">Rechazada</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Aceptada">Aceptada</option>
+                <option value="Rechazada">Rechazada</option>
               </select>
             </div>
           </div>
@@ -72,9 +72,9 @@
             <th scope="row">{{ order.fecha | date: 'yyyy-MM-dd'}}</th>
             <td>{{ order.tipo }}</td>
             <td>{{ order.medico }}</td>
-            <td [ngClass]="{'btn-primary':order.estado=='Pendiente','btn-success':order.estado=='aceptada','btn-danger':order.estado=='rechazada'}">{{ order.estado}}</td>
+            <td [ngClass]="{'btn-primary':order.estado=='Pendiente','btn-success':order.estado=='Aceptada','btn-danger':order.estado=='Rechazada'}">{{ order.estado}}</td>
             <td>{{ order.observacion }}</td>
-            <td><a href="{{ order.data}}">Ver</a></td>
+            <td><a href="{{ order.data}}" target="_blank">Ver</a></td>
           </tr>
           </tbody>
         </table>

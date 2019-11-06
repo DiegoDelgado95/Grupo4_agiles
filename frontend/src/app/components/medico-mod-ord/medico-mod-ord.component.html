@@ -92,8 +92,6 @@
           <ul class="list-group">Detalle Usuario:</ul>
             <li class="list-group-item">Nombre y Apellido: {{ modalUser.first_name }}  {{ modalUser.last_name }}</li>
             <li class="list-group-item">Número de Afiliado: {{ modalUser.nro_afiliado }} </li>
-            <li class="list-group-item">Tipo de Afiliado: </li>
-          <button type="button" class="btn btn-link">Ver más</button>
           </form>
           </div>
        </div>   
@@ -112,9 +110,9 @@
             <label>Estado: </label>
             <div class="form-group pr-4"> 
               <select  class="form-control" [(ngModel)]="modalOrder.estado" [ngModelOptions]="{standalone: true}">
-                <option value="pendiente">Pendiente</option>
-                <option value="aceptada">Aceptada</option>
-                <option value="rechazada">Rechazada</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Aceptada">Aceptada</option>
+                <option value="Rechazada">Rechazada</option>
               </select>
 	            </div>
 	            <label>Cargo: </label>
@@ -165,10 +163,10 @@
             <th scope="row">{{ order.user_id }}</th>
             <td>{{ order.fecha | date: 'yyyy-MM-dd'}}</td>
             <td>{{ order.tipo }}</td>
-            <td><p [ngClass]="{'btn-primary':order.estado=='Pendiente','btn-success':order.estado=='aceptada','btn-danger':order.estado=='rechazada'}">{{ order.estado }}</p></td>
+            <td><p [ngClass]="{'btn-primary':order.estado=='Pendiente','btn-success':order.estado=='Aceptada','btn-danger':order.estado=='Rechazada'}">{{ order.estado }}</p></td>
             <td>{{ order.observacion }}</td>
             <td>
-              <a href="{{ order.data }}" class="btn btn-indigo btn-sm m-0">Ver Adjunto</a>
+              <a href="{{ order.data }}" target="_blank" class="btn btn-indigo btn-sm m-0">Ver Adjunto</a>
             </td>
             <td>
             <button (click)="modOrder(order.id)" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" >
