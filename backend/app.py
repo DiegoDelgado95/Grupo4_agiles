@@ -8,15 +8,30 @@ from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 from sqlalchemy.exc import IntegrityError
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
 app.config["IMAGE_UPLOADS"] = "/var/www/img/"
+app.config['DEBUG'] = True
+app.config['TESTING'] = False
+app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
+app.config['MAIL_PORT'] = 587 # 465 para SSL
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_DEBUG'] = True
+app.config['MAIL_USERNAME'] = 'apikey'
+app.config['MAIL_PASSWORD'] = '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'
+app.config['MAIL_DEFAULT_SENDER'] = ('OSME', 'no-reply@osme.com')
+app.config['MAIL_MAX_EMAILS'] = None
+app.config['MAIL_SUPRESS_END'] = False
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
 db = SQLAlchemy(app)
 CORS(app)
 ma = Marshmallow(app)
 login_manager = LoginManager()
 migrate = Migrate(app, db)
+mail = Mail(app)
 
 ## MODEL - TABLA USUARIOS ##
 class User(UserMixin, db.Model):
@@ -83,7 +98,7 @@ class Orden(db.Model):
     tipo = db.Column(db.String(300))
     fecha = db.Column(db.DateTime, default=datetime.datetime.now())
     #Paciente
-    user_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('usuarios.nro_afiliado'))
     #Medico
     medico = db.Column(db.String(60), db.ForeignKey('medicos.nombre'), nullable=True)
     observacion = db.Column(db.String(300))
@@ -191,7 +206,7 @@ def get_users():
 @app.route("/api/users/<int:pk>")
 def get_user(pk):
     try:
-        user = User.query.get(pk)
+        user = User.query.filter_by(nro_afiliado=pk).first()
     except IntegrityError:
         return jsonify({"message": "User could not be found."}), 400
     user_result = user_schema.dump(user)
@@ -404,6 +419,18 @@ def add_elem():
 
     return cartilla_schema.jsonify(new_elem)
 
+# Testing Mail notification
+@app.route('/api/mail', methods=['POST'])
+def mail_notification():
+    recipient_mail = request.json['email']
+    nombre = request.json['first_name']
+    apellido = request.json['last_name']
+    title = 'Hola '+nombre+' '+apellido+'! El estado de tu orden ha sido actualizado'
+    msg = Message(title, recipients=[recipient_mail])
+    msg.html = '<p><i>Tu orden ha sido actualizada</i></p><a href="http://localhost:4200/verorden">Ingresa aqui para ver el estado de tu orden</a>'
+    mail.send(msg)
+
+    return jsonify("Se ha enviado el mail con exito")
 
 if __name__ == "__main__":
     db.create_all()

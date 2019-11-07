@@ -2,7 +2,7 @@
     <div class="card-header">
       <h3>Ver orden</h3>
     </div>
-    <div class="card-body">
+    <!--<div class="card-body">
       <div class="well well-lg">
         <form class="form-inline" role="form">
           <legend class="text-center">Filtros</legend>
@@ -34,7 +34,7 @@
                 <input type='text' class="form-control" id='' placeholder='Select Date' >
               </div>
               <div class="input-group-addon input-group date ">to</div>
-        <!-- segunda fecha-->
+        
               <div class=" input-group date " id='datetimepicker2' >
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
@@ -47,8 +47,8 @@
         <br>
         <button type="submit" class="btn btn-primary my-1 center-block  fas fa-star-christmas fa-spin " >Aplicar</button>
       </div>
-    </div> <!--cad body -->
-</div>
+    </div> 
+</div>-->
 <div>
         <table  id="dtBasicExample" class="table table-striped table-bordered table-sm well well-sm " cellspacing="0" width="100%">
           <thead>
@@ -59,7 +59,9 @@
               </th>
               <th class="th-sm">Medico
               </th>
-              <th class="th-sm">Estado
+              <th style="width: 10%" class="th-sm">Estado
+              </th>
+              <th class="th-sm">Descuento
               </th>
               <th class="th-sm">Observacion
               </th>
@@ -72,7 +74,8 @@
             <th scope="row">{{ order.fecha | date: 'yyyy-MM-dd'}}</th>
             <td>{{ order.tipo }}</td>
             <td>{{ order.medico }}</td>
-            <td [ngClass]="{'btn-primary':order.estado=='Pendiente','btn-success':order.estado=='Aceptada','btn-danger':order.estado=='Rechazada'}">{{ order.estado}}</td>
+            <td ><p [ngClass]="{'button-pendiente':order.estado=='Pendiente','button-aceptada':order.estado=='Aceptada','button-rechazada':order.estado=='Rechazada'}">{{ order.estado }}</p></td>
+            <td>{{ order.descuento }}</td>
             <td>{{ order.observacion }}</td>
             <td><a href="{{ order.data}}" target="_blank">Ver</a></td>
           </tr>
