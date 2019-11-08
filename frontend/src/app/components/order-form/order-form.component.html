@@ -16,6 +16,7 @@
                 <div class="form-group">
                     <label>Medico:   </label>
                     <select [(ngModel)]="order.medico" [ngModelOptions]="{standalone: true}" class="form-control">
+                        <option value="seleccionar">Seleccionar..</option>
                         <option *ngFor="let medico of medicos">{{ medico.nombre }}</option>
                     </select>
                 </div>
