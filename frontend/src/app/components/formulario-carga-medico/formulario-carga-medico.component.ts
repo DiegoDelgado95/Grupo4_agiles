@@ -40,7 +40,7 @@ export class FormularioCargaMedicoComponent implements OnInit {
       matricula: new FormControl('', Validators.compose([Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(5), Validators.maxLength(30)])),
       correo: new FormControl('', Validators.compose([Validators.required, Validators.email])),
       password: new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z]*'), Validators.minLength(8), Validators.maxLength(8)])),
-      hospital: new FormControl(this.medico.hospital, Validators.maxLength(30)),
+      hospital: new FormControl(this.medico.hospital, Validators.maxLength(200)),
       especialidad: new FormControl(this.medico.especialidad, Validators.maxLength(30))
     });
   }
