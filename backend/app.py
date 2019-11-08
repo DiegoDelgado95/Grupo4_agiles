@@ -425,9 +425,12 @@ def mail_notification():
     recipient_mail = request.json['email']
     nombre = request.json['first_name']
     apellido = request.json['last_name']
-    title = 'Hola '+nombre+' '+apellido+'! El estado de tu orden ha sido actualizado'
+    title = 'Hola '+nombre+' '+apellido+'!'
     msg = Message(title, recipients=[recipient_mail])
-    msg.html = '<p><i>Tu orden ha sido actualizada</i></p><a href="http://localhost:4200/verorden">Ingresa aqui para ver el estado de tu orden</a>'
+    with open('mail.html', 'r') as f:
+        html_string = f.read()
+    msg.html = html_string
+    #msg.html = '<p><i>Tu orden ha sido actualizada</i></p><a href="http://localhost:4200/verorden">Ingresa aqui para ver el estado de tu orden</a>'
     mail.send(msg)
 
     return jsonify("Se ha enviado el mail con exito")
