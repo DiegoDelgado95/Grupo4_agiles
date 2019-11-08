@@ -18,6 +18,8 @@ import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-or
 import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component';
 import { VerCartillaComponent } from './components/ver-cartilla/ver-cartilla.component';
 import { FormularioCargaMedicoComponent } from './components/formulario-carga-medico/formulario-carga-medico.component';
+import { PerfilComponent } from './component/perfil/perfil.component';
+import { Perfil2Component } from './components/perfil2/perfil2.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { FormularioCargaMedicoComponent } from './components/formulario-carga-me
     MedicoModOrdComponent,
     MultipleFormOBSComponent,
     VerCartillaComponent,
-    FormularioCargaMedicoComponent
+    FormularioCargaMedicoComponent,
+    PerfilComponent,
+    Perfil2Component
   ],
   imports: [
 	BrowserModule,
