@@ -9,6 +9,7 @@ import { MedicoModOrdComponent } from './components/medico-mod-ord/medico-mod-or
 import { MultipleFormOBSComponent } from './components/multiple-form-obs/multiple-form-obs.component';
 import { VerCartillaComponent } from './components/ver-cartilla/ver-cartilla.component';
 import { FormularioCargaMedicoComponent } from './components/formulario-carga-medico/formulario-carga-medico.component';
+import { Perfil2Component } from './components/perfil2/perfil2.component';
 
 
 
@@ -52,8 +53,11 @@ const routes: Routes = [
   {
     path: 'verCartilla',
     component: VerCartillaComponent
-  }
-  
+  },
+  {
+    path: 'perfil',
+    component: Perfil2Component
+  },
 ];
 
 @NgModule({

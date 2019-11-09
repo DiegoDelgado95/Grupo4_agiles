@@ -1,0 +1,195 @@
+<hr>
+<div class="container bootstrap snippet">
+    <div class="row">
+  		<div class="col-sm-10"><h1>Perfil del usuario</h1></div>
+    	<!-- <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>-->
+    </div>
+    <div class="row">
+  		<div class="col-sm-3"><!--left col-->
+              
+
+      <div class="text-center">
+        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+        <!-- <input type="file" class="text-center center-block file-upload"> -->
+      </div>
+
+               
+          <!-- <div class="panel panel-default">
+            <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
+            <div class="panel-body"><a href="http://bootnipets.com">bootnipets.com</a></div>
+          </div> 
+          
+          
+          <ul class="list-group">
+            <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
+          </ul> 
+               
+          <div class="panel panel-default">
+            <div class="panel-heading">Social Media</div>
+            <div class="panel-body">
+            	<i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+            </div>
+          </div> -->
+          
+        </div><!--/col-3-->
+    	<div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Datos Personales</a></li>
+                <li><a data-toggle="tab" href="#settings">Modificar</a></li>
+            </ul>
+
+              
+          <div class="tab-content">
+            <div class="tab-pane active" id="home">
+                <hr>
+                  <form class="form" action="##" method="post" id="registrationForm">
+                    
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>Nombre completo</h4></label>
+                              <input [(ngModel)]="user.first_name" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="first_name" id="first_name" placeholder="Nombre completo" disabled>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                            <label for="last_name"><h4>Apellido</h4></label>
+                              <input [(ngModel)]="user.last_name" [ngModelOptions]="{standalone: true}" type="text" class="form-control" name="last_name" id="last_name" placeholder="Apellido" disabled>
+                          </div>
+                      </div>
+                      <div class="form-group">
+
+                           <div class="col-xs-6">
+                            <label for="nro_afiliado"><h4>Numero Afiliado</h4></label>
+                            <input [(ngModel)]="user.nro_afiliado" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="afiliado_numero" id="afiliado_numero" placeholder="Numero Afiliado" disabled>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          
+                                <div class="col-xs-6">
+                                  <label for="estado_civil"><h4>Estado Civil</h4></label>
+                                    <input [(ngModel)]="user.estado_civil" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="estado_civil" id="estado_civil" placeholder="Estado Civil" disabled>
+                                </div>
+                            </div>
+                    
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="phone"><h4>Telefono</h4></label>
+                              <input [(ngModel)]="user.telefono" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="phone" id="phone" placeholder="Telefono" disabled>
+                          </div>
+                      </div>
+    
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="email"><h4>Email</h4></label>
+                              <input [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}"type="email" class="form-control" name="email" id="email" placeholder="nombre@email.com" disabled>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="ciudad"><h4>Ciudad</h4></label>
+                              <input [(ngModel)]="user.ciudad" [ngModelOptions]="{standalone: true}"type="email" class="form-control" id="location" placeholder="Ciudad" disabled>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                            <div class="col-xs-6">
+                              <label for="direccion"><h4>Direccion</h4></label>
+                                <input [(ngModel)]="user.direccion" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="direccion" id="direccion" placeholder="Direccion" disabled>
+                            </div>
+                        </div>
+                    
+              	</form>
+             
+              <hr>
+              
+             </div><!--/tab-pane-->
+             <div class="tab-pane" id="settings">
+               
+               <h2></h2>
+               
+               <hr>
+                  <form class="form" action="##" method="post" id="registrationForm">
+                        <div class="form-group">
+                          
+                                <div class="col-xs-6">
+                                    <label for="first_name"><h4>Nombre completo</h4></label>
+                                    <input [(ngModel)]="user.first_name" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="first_name" disabled id="first_name" placeholder="Nombre completo">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                
+                                <div class="col-xs-6">
+                                  <label for="last_name"><h4>Apellido</h4></label>
+                                    <input [(ngModel)]="user.last_name" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="last_name" disabled id="last_name" placeholder="Apellido">
+                                </div>
+                            </div>
+                            <div class="form-group">
+      
+                                 <div class="col-xs-6">
+                                  <label for="nro_afiliado"><h4>Numero Afiliado</h4></label>
+                                  <input [(ngModel)]="user.nro_afiliado" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="afiliado_numero" disabled id="afiliado_numero" placeholder="Numero Afiliado">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                
+                                      <div class="col-xs-6">
+                                        <label for="estado_civil"><h4>Estado Civil</h4></label>
+                                          <input [(ngModel)]="user.estado_civil" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="estado_civil" id="estado_civil" placeholder="Ingrese su Estado Civil" title="Ingrese su estado civil.">
+                                      </div>
+                                  </div>
+                          
+                            <div class="form-group">
+                                
+                                <div class="col-xs-6">
+                                    <label for="phone"><h4>Telefono</h4></label>
+                                    <input [(ngModel)]="user.telefono" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="phone" id="phone" placeholder="Ingrese su numero de Telefono" title="Ingrese su numero de telefono.">
+                                </div>
+                            </div>
+                
+                            <div class="form-group">
+                                
+                                <div class="col-xs-6">
+                                    <label for="email"><h4>Email</h4></label>
+                                    <input [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}"type="email" class="form-control" name="email" id="email" placeholder="Ingrese su email ej:nombre@email.com" title="Ingrese su email.">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                
+                                <div class="col-xs-6">
+                                    <label for="ciudad"><h4>Ciudad</h4></label>
+                                    <input [(ngModel)]="user.ciudad" [ngModelOptions]="{standalone: true}"type="email" class="form-control" id="location" placeholder="Ingrese su Ciudad" title="Ingrese la ciudad donde Vive">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                
+                                  <div class="col-xs-6">
+                                    <label for="direccion"><h4>Direccion</h4></label>
+                                      <input [(ngModel)]="user.direccion" [ngModelOptions]="{standalone: true}"type="text" class="form-control" name="direccion" id="Ingrese su Direccion" placeholder="Direccion" title="Ingrese su direccion.">
+                                  </div>
+                              </div>
+                      <div class="form-group">
+                           <div class="col-xs-12">
+                                <br>
+                              	<button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign" (click)="updateUser()"></i> Save</button>
+                               	<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                            </div>
+                      </div>
+              	</form>
+               
+             
+                  
+               
+              </div><!--/tab-pane-->
+          </div><!--/tab-content-->
+
+        </div><!--/col-9-->
+    </div><!--/row-->
+                                                      
