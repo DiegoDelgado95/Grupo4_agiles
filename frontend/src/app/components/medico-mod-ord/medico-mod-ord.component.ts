@@ -24,7 +24,8 @@ export class MedicoModOrdComponent implements OnInit {
   modalUser:User={
     first_name:'',
     last_name:'',
-    nro_afiliado:0
+    nro_afiliado:0,
+    email:''
   }
   
   modalOrder:Order={
@@ -86,5 +87,11 @@ export class MedicoModOrdComponent implements OnInit {
     setTimeout(function(){location.reload()}, 600);
   }
 
+  notificarUser(){
+    this._userService.notificarUser(this.modalUser).subscribe(res => {
+    },
+    err => console.error(err)
+    )
+  }
 
 }

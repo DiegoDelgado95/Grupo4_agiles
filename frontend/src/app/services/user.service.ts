@@ -80,5 +80,9 @@ export class UserService {
       return null;
     }    
   }
+
+  notificarUser(user:User){
+    return this.http.post(`${this.API_URI}/mail`, user);
+  }
   
 }

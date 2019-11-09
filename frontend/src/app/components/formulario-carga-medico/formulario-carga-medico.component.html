@@ -84,7 +84,7 @@
 			<div class="form-group col-md-4">
 			  <label> Especialidad:</label> 
 			  <select formControlName="especialidad" class="form-control" [(ngModel)]="medico.especialidad" name="especialidad">
-				<option selected>Seleccionar..</option>
+				<option [ngValue]="null" selected>Seleccionar..</option>
 				<option> Clinico</option>
 				<option> Analisis</option>
 				<option> Traumatologo</option>

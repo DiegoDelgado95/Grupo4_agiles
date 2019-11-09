@@ -39,7 +39,7 @@ export class OrderFormComponent implements OnInit {
     fd.append('tipo', this.order.tipo)
     fd.append('medico', this.order.medico)
     this.user = JSON.parse(localStorage.getItem("user"));
-    fd.append('user_id', (this.user.id).toString());
+    fd.append('user_id', (this.user.nro_afiliado).toString());
     this.http.post('http://localhost:5000/api/order', fd).subscribe (res =>{
       console.log(res)
       alert("Orden agregada correctamente");
