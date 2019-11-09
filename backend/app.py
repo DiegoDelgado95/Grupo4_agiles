@@ -243,6 +243,28 @@ def add_user():
 
     return user_schema.jsonify(new_user)
 
+#Edit de datos del perfil de usuario
+@app.route('/api/users', methods=['PUT'])
+def update_user():
+
+    id = request.json['id']
+    email = request.json['email']
+    telefono = request.json['telefono']
+    ciudad = request.json['ciudad']
+    estado_civil = request.json['estado_civil']
+    direccion = request.json['direccion']
+
+    #Update
+    update_user = User.query.filter_by(id=id).first()
+    update_user.email = email
+    update_user.telefono = telefono
+    update_user.ciudad = ciudad
+    update_user.estado_civil = estado_civil
+    update_user.direccion = direccion
+
+    db.session.commit()
+
+    return user_schema.jsonify(update_user)
 
 #Obtener todas la ordenes
 @app.route("/api/order")

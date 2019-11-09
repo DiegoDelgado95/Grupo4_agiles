@@ -31,13 +31,16 @@ export class Perfil2Component implements OnInit {
 
   informacion() {
    this.user=this._User.getCurrentUser();
-
+   this._User.getUser(this.user.nro_afiliado).subscribe(res =>{
+   this.user = res
+  });
   }
   
   updateUser(){
      this._User.updateUser(this.user).subscribe(
        res => {
-         console.log(res)
+         console.log(res);
+         setTimeout(function(){location.reload()}, 600);
        },
        err => console.error(err)
      )
