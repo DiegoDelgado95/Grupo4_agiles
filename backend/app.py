@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields, post_load, ValidationError
 from flask_cors import CORS
+from flask_migrate import Migrate, MigrateCommand
 from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
@@ -32,6 +33,8 @@ ma = Marshmallow(app)
 login_manager = LoginManager()
 migrate = Migrate(app, db)
 mail = Mail(app)
+
+migrate = Migrate(app, db)
 
 ## MODEL - TABLA USUARIOS ##
 class User(UserMixin, db.Model):
