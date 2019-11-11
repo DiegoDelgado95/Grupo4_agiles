@@ -8,6 +8,7 @@ import { OrderService } from 'src/app/services/order.service';
 //Interfaces
 import { Order } from 'src/app/models/order';
 import { User } from 'src/app/models/user';
+import { Medico } from 'src/app/models/medico';
 
 
 @Component({
@@ -18,32 +19,34 @@ import { User } from 'src/app/models/user';
 export class MedicoModOrdComponent implements OnInit {
 
   orders:any=[];
-  modalMedico:User;
+  modalMedico:Medico;
 
   modalUser:User={
     first_name:'',
     last_name:'',
-    nro_afiliado:0
+    nro_afiliado:0,
+    email:''
   }
   
   modalOrder:Order={
     estado: '',
     descuento:'',
     observacion: '',
-    medico_id: 0,
+    medico: '',
   }
   
 
   constructor(private _userService:UserService, private _orderService: OrderService, private router:Router) { }
 
   ngOnInit() {
+    this.modalMedico = this._userService.getCurrentUser();
     this.getOrders()
   }
 
 
   //Obtengo TODAS la Ordenes para listar en la tabla
   getOrders(){
-    this._orderService.getOrders().subscribe(res => {
+    this._orderService.getOrdersMed(this.modalMedico.nombre).subscribe(res => {
       this.orders = res
     },
     err => console.error(err)
@@ -76,7 +79,7 @@ export class MedicoModOrdComponent implements OnInit {
 
   //Editar una orden por el medico
   editOrderMedico(){
-    this.modalOrder.medico_id = this.modalMedico.id
+    this.modalOrder.medico = this.modalMedico.nombre
     this._orderService.updateOrder(this.modalOrder).subscribe(res => {
     },
       err => console.error(err)
@@ -84,5 +87,11 @@ export class MedicoModOrdComponent implements OnInit {
     setTimeout(function(){location.reload()}, 600);
   }
 
+  notificarUser(){
+    this._userService.notificarUser(this.modalUser).subscribe(res => {
+    },
+    err => console.error(err)
+    )
+  }
 
 }

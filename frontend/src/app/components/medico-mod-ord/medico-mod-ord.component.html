@@ -2,7 +2,7 @@
     <div class="card-header">
       <h3>Ver Ordenes Medico</h3>
     </div>
-    <div class="card-body">
+    <!--<div class="card-body">
       <div class="well well-lg">
         <form class="form-inline" role="form">
           <legend class="text-center">Filtros</legend>
@@ -41,7 +41,7 @@
                 <input type='text' class="form-control" id='' placeholder='Select Date' >
               </div>
               <div class="input-group-addon input-group date ">to</div>
-        <!-- segunda fecha-->
+        <!-- segunda fecha
               <div class=" input-group date " id='datetimepicker2' >
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
@@ -54,8 +54,8 @@
         <br>
         <button type="submit" class="btn btn-primary my-1 center-block  fas fa-star-christmas fa-spin " >Aplicar</button>
       </div>
-    </div> <!--cad body -->
-  </div>
+    </div> <!--cad body 
+  </div>-->
 
 <!-- Modal Aplicar -->
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="aplibtn">
@@ -66,7 +66,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="myModal" data-dismiss="modal" id="modal-btn-si" (click)="editOrderMedico()">Si</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="myModal" data-dismiss="modal" id="modal-btn-si" (click)="notificarUser()" (click)="editOrderMedico()">Si</button>
         <button type="button" class="btn btn-danger" id="modal-btn-no" data-dismiss="modal" data-toggle="modal" data-target="#myModal">No</button>
       </div>
     </div>
@@ -92,8 +92,7 @@
           <ul class="list-group">Detalle Usuario:</ul>
             <li class="list-group-item">Nombre y Apellido: {{ modalUser.first_name }}  {{ modalUser.last_name }}</li>
             <li class="list-group-item">Número de Afiliado: {{ modalUser.nro_afiliado }} </li>
-            <li class="list-group-item">Tipo de Afiliado: </li>
-          <button type="button" class="btn btn-link">Ver más</button>
+            <li class="list-group-item">Email: {{ modalUser.email }} </li>
           </form>
           </div>
        </div>   
@@ -112,9 +111,9 @@
             <label>Estado: </label>
             <div class="form-group pr-4"> 
               <select  class="form-control" [(ngModel)]="modalOrder.estado" [ngModelOptions]="{standalone: true}">
-                <option value="pendiente">Pendiente</option>
-                <option value="aceptada">Aceptada</option>
-                <option value="rechazada">Rechazada</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Aceptada">Aceptada</option>
+                <option value="Rechazada">Rechazada</option>
               </select>
 	            </div>
 	            <label>Cargo: </label>
@@ -150,7 +149,9 @@
               </th>
               <th class="th-sm">Tipo
               </th>
-              <th class="th-sm">Estado
+              <th style="width: 10%" class="th-sm">Estado
+              </th>
+              <th class="th-sm">Descuento
               </th>
               <th class="th-sm">Observacion
               </th>
@@ -165,10 +166,11 @@
             <th scope="row">{{ order.user_id }}</th>
             <td>{{ order.fecha | date: 'yyyy-MM-dd'}}</td>
             <td>{{ order.tipo }}</td>
-            <td><p [ngClass]="{'btn-primary':order.estado=='Pendiente','btn-success':order.estado=='aceptada','btn-danger':order.estado=='rechazada'}">{{ order.estado }}</p></td>
+            <td ><p [ngClass]="{'button-pendiente':order.estado=='Pendiente','button-aceptada':order.estado=='Aceptada','button-rechazada':order.estado=='Rechazada'}">{{ order.estado }}</p></td>
+            <td>{{ order.descuento }}</td>
             <td>{{ order.observacion }}</td>
             <td>
-              <a href="{{ order.data }}" class="btn btn-indigo btn-sm m-0">Ver Adjunto</a>
+              <a href="{{ order.data }}" target="_blank" class="btn btn-indigo btn-sm m-0">Ver Adjunto</a>
             </td>
             <td>
             <button (click)="modOrder(order.id)" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" >

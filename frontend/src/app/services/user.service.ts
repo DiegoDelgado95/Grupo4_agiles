@@ -32,6 +32,10 @@ export class UserService {
     return this.http.post(`${this.API_URI}/users`, user);
   }
 
+  updateUser(user: User){
+    return this.http.put(`${this.API_URI}/users`, user);
+  }
+
   deleteUser(id: string){
     return this.http.delete(`${this.API_URI}/users/${id}`);
   }
@@ -65,6 +69,20 @@ export class UserService {
     }else{
       return null;
     }
+  }
+
+  getCurrentUserName(){
+    let user_string = localStorage.getItem("user");
+    if(!isNullOrUndefined(user_string)){
+      this._user = JSON.parse(user_string);
+      return "Hi, " + this._user.first_name + "!";
+    }else{
+      return null;
+    }    
+  }
+
+  notificarUser(user:User){
+    return this.http.post(`${this.API_URI}/mail`, user);
   }
   
 }

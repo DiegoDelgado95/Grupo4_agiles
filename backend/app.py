@@ -9,15 +9,30 @@ from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 from sqlalchemy.exc import IntegrityError
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin3:password@localhost/flask_app"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://admin:password@localhost/flask_app"
 app.config["IMAGE_UPLOADS"] = "/var/www/img/"
+app.config['DEBUG'] = True
+app.config['TESTING'] = False
+app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
+app.config['MAIL_PORT'] = 587 # 465 para SSL
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_DEBUG'] = True
+app.config['MAIL_USERNAME'] = 'apikey'
+app.config['MAIL_PASSWORD'] = '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'
+app.config['MAIL_DEFAULT_SENDER'] = ('OSME', 'no-reply@osme.com')
+app.config['MAIL_MAX_EMAILS'] = None
+app.config['MAIL_SUPRESS_END'] = False
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
 db = SQLAlchemy(app)
 CORS(app)
 ma = Marshmallow(app)
 login_manager = LoginManager()
 migrate = Migrate(app, db)
+mail = Mail(app)
 
 migrate = Migrate(app, db)
 
@@ -84,13 +99,76 @@ class Orden(db.Model):
     data = db.Column(db.String(300))
     estado = db.Column(db.String(300), default='Pendiente')
     tipo = db.Column(db.String(300))
-    fecha = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    fecha = db.Column(db.DateTime, default=datetime.datetime.now())
     #Paciente
-    user_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('usuarios.nro_afiliado'))
     #Medico
-    medico_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=True)
+    medico = db.Column(db.String(60), db.ForeignKey('medicos.nombre'), nullable=True)
     observacion = db.Column(db.String(300))
     descuento = db.Column(db.String(60))
+
+## MODEL - TABLA CARTILLA ##
+class Cartilla(db.Model):
+    __tablename__ = 'cartilla'
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(60), index=True, unique=True)
+    direccion = db.Column(db.String(200), index=True, unique=True)
+    telefono = db.Column(db.String(60), index=True, unique=True)
+    ## 1 - medicamento / 2 - Hospital / 3 - Farmacia / el medico lo cargamos del otro formulario de registro ##
+    is_element = db.Column(db.Integer, index=True) 
+
+    global switch_element
+    def switch_element(argument):
+        switcher = {
+            'Medicamento': 1,
+            'Hospital': 2,
+            'Farmacia': 3,
+            '' : 0
+        }
+        return switcher.get(argument)
+
+## MODEL - TABLA MEDICOS ##
+class Medico(db.Model):
+    __tablename__ = 'medicos'
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(60), index=True)
+    cuit = db.Column(db.String(60), index=True)
+    matricula = db.Column(db.String(60), index=True, unique=True)
+    especialidad = db.Column(db.String(60), index=True)
+    hospital = db.Column(db.String(60), db.ForeignKey('cartilla.nombre'), nullable=True)
+    correo = db.Column(db.String(60), index=True, unique=True)
+    password = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean, default=True)
+
+
+
+## MEDICO SCHEMA ##
+class MedicoSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'nombre', 'cuit', 'matricula', 'especialidad', 'hospital', 'is_admin')
+
+    @post_load
+    def make_medico(self, data, **kwargs):
+        return medico(**data)
+
+medico_schema = MedicoSchema()
+medicos_schema = MedicoSchema(many=True)
+
+    
+
+## CARTILLA SCHEMA ##
+class CarSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'nombre', 'direccion', 'telefono', 'is_element')
+
+    @post_load
+    def make_cartilla(self, data, **kwargs):
+        return cartilla(**data)
+
+cartilla_schema = CarSchema()
+cartillas_schema = CarSchema(many=True)
 
 ## USER SCHEMA ##
 class UserSchema(ma.Schema):
@@ -107,19 +185,11 @@ users_schema = UserSchema(many=True)
 ## ORDEN SCHEMA ##
 class OrdenSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'data', 'estado', 'tipo', 'fecha', 'user_id', 'medico_id', 'observacion', 'descuento')
+        fields = ('id', 'data', 'estado', 'tipo', 'fecha', 'user_id', 'medico', 'observacion', 'descuento')
 
     @post_load
     def make_order(self, data, **kwargs):
         return Orden(**data)
-
-class BytesField(fields.Field):
-    def _validate(self, value):
-        if type(value) is not bytes:
-            raise ValidationError('Invalid input type.')
-
-        if value is None or value == b'':
-            raise ValidationError('Invalid value')
 
 orden_schema = OrdenSchema()
 ordenes_schema = OrdenSchema(many=True)
@@ -139,7 +209,7 @@ def get_users():
 @app.route("/api/users/<int:pk>")
 def get_user(pk):
     try:
-        user = User.query.get(pk)
+        user = User.query.filter_by(nro_afiliado=pk).first()
     except IntegrityError:
         return jsonify({"message": "User could not be found."}), 400
     user_result = user_schema.dump(user)
@@ -176,7 +246,28 @@ def add_user():
 
     return user_schema.jsonify(new_user)
 
+#Edit de datos del perfil de usuario
+@app.route('/api/users', methods=['PUT'])
+def update_user():
 
+    id = request.json['id']
+    email = request.json['email']
+    telefono = request.json['telefono']
+    ciudad = request.json['ciudad']
+    estado_civil = request.json['estado_civil']
+    direccion = request.json['direccion']
+
+    #Update
+    update_user = User.query.filter_by(id=id).first()
+    update_user.email = email
+    update_user.telefono = telefono
+    update_user.ciudad = ciudad
+    update_user.estado_civil = estado_civil
+    update_user.direccion = direccion
+
+    db.session.commit()
+
+    return user_schema.jsonify(update_user)
 
 #Obtener todas la ordenes
 @app.route("/api/order")
@@ -187,14 +278,19 @@ def get_ordenes():
     return jsonify(result)
 
 
-
 #Obtener todas las ordenes de un usuario
 @app.route("/api/orders/<int:pk>", methods=['GET'])
 def get_ordenes_user(pk):
     ordenes = Orden.query.filter_by(user_id=pk)
     result = ordenes_schema.dump(ordenes)
-    return jsonify(result)      
+    return jsonify(result)     
 
+#Obtener todas las ordenes de un usuario
+@app.route("/api/ordersmed/<string:pk>", methods=['GET'])
+def get_ordenes_med(pk):
+    ordenes = Orden.query.filter_by(medico=pk)
+    result = ordenes_schema.dump(ordenes)
+    return jsonify(result)   
 
 
 #Crear una nueva Orden, del user
@@ -207,13 +303,15 @@ def add_order():
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], unique_filename))
     #Datos del form order user
     tipo = request.form['tipo']
+    medico = request.form['medico']
     user_id = int(request.form['user_id'])
     data = "http://localhost/images/"+unique_filename
-    new_orden = Orden(tipo=tipo,data=data,user_id=user_id)
+    new_orden = Orden(tipo=tipo,data=data,user_id=user_id,medico=medico)
     db.session.add(new_orden)
     db.session.commit()
 
     return orden_schema.jsonify(new_orden)
+
 
 #Edit de orden departe del medico
 @app.route('/api/order', methods=['PUT'])
@@ -224,14 +322,14 @@ def update_order():
     estado = request.json['estado']
 
     #Datos del medico que realizo el cambio
-    medico_id = request.json['medico_id']
+    medico = request.json['medico']
     observacion = request.json['observacion']
     descuento = request.json['descuento']
 
     #Update
     update_order = Orden.query.filter_by(id=id).first()
     update_order.estado = estado
-    update_order.medico_id = medico_id
+    update_order.medico = medico
     update_order.observacion = observacion
     update_order.descuento = descuento
 
@@ -254,8 +352,113 @@ def login():
     email = request.json['email']
     password = request.json['password']
     login = User.query.filter_by(email=email)
-    return users_schema.jsonify(login)
+    login_medico = Medico.query.filter_by(correo=email)
+    medico = db.session.query(db.exists().where(Medico.correo == email)).scalar()
+    if medico:
+        return medicos_schema.jsonify(login_medico)
+    else:
+        return users_schema.jsonify(login)
 
+# Obtener todos los  Medicos
+@app.route("/api/medicos")
+def get_medicos():
+    medicos = Medico.query.all()
+    # Serialize the queryset
+    result = medicos_schema.dump(medicos)
+    return jsonify(result)
+
+# Obtener todos los  Hospitales
+@app.route("/api/hospitales")
+def get_hospitales():
+    hospitales = Cartilla.query.filter_by(is_element="2").all()
+    # Serialize the queryset
+    result = cartillas_schema.dump(hospitales)
+    return jsonify(result)
+
+# Obtener todos las Farmacias
+@app.route("/api/farmacias")
+def get_farmacias():
+    farmacias = Cartilla.query.filter_by(is_element="3").all()
+    # Serialize the queryset
+    result = cartillas_schema.dump(farmacias)
+    return jsonify(result)
+
+# Obtener todos los Medicamentos
+@app.route("/api/medicamentos")
+def get_medicamentos():
+    medicamentos = Cartilla.query.filter_by(is_element="1").all()
+    # Serialize the queryset
+    result = cartillas_schema.dump(medicamentos)
+    return jsonify(result)
+    
+
+# Crear un nuevo Medico
+@app.route("/api/medicos", methods=['POST'])
+def add_medico():
+    nombre = request.json['nombre']
+    cuit = request.json['cuit']
+    matricula = request.json['matricula']
+    especialidad = request.json['especialidad']
+    hospital = request.json['hospital']
+    correo = request.json['correo']
+    password = request.json['password']
+
+    new_med = Medico(nombre=nombre, 
+                    cuit=cuit,
+                    matricula=matricula,
+                    especialidad=especialidad,
+                    hospital=hospital,
+                    correo=correo,
+                    password=password)
+    db.session.add(new_med)
+    db.session.commit()
+
+    return medico_schema.jsonify(new_med)
+
+
+# Obtener todos los items de la cartilla
+@app.route("/api/cartilla")
+def get_cartilla():
+    cartilla = Cartilla.query.all()
+    # Serialize the queryset
+    result = cartillas_schema.dump(cartilla)
+    return jsonify(result)
+
+# Cargar un item a la cartilla
+@app.route('/api/cartilla', methods=['POST'])
+def add_elem():
+    nombre = request.json['nombre']
+    direccion = request.json['direccion']
+    tipo = request.json['tipo']
+    telefono = request.json['telefono']
+
+    is_element = switch_element(tipo)
+
+    new_elem = Cartilla(nombre=nombre,
+                    direccion=direccion,
+                    is_element=is_element,
+                    telefono=telefono)
+
+    db.session.add(new_elem)
+    db.session.commit()
+
+    return cartilla_schema.jsonify(new_elem)
+
+# Testing Mail notification
+@app.route('/api/mail', methods=['POST'])
+def mail_notification():
+    recipient_mail = request.json['email']
+    nombre = request.json['first_name']
+    apellido = request.json['last_name']
+    title = 'Hola '+nombre+' '+apellido+'!'
+    msg = Message(title, recipients=[recipient_mail])
+    with open('mail.html', 'r') as f:
+        html_string = f.read()
+    msg.html = html_string
+    #msg.html = '<p><i>Tu orden ha sido actualizada</i></p><a href="http://localhost:4200/verorden">Ingresa aqui para ver el estado de tu orden</a>'
+    mail.send(msg)
+
+    return jsonify("Se ha enviado el mail con exito")
 
 if __name__ == "__main__":
     db.create_all()

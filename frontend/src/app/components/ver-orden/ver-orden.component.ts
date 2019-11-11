@@ -26,7 +26,7 @@ export class VerOrdenComponent implements OnInit {
     //Obtengo el USER logeado
     this.user = this.userService.getCurrentUser();
     //Obtengo todas las ORDENES del USER logeado
-    this.orderService.getOrderUser(this.user.id).subscribe(
+    this.orderService.getOrderUser(this.user.nro_afiliado).subscribe(
       res => {
         this.orders = res
       },

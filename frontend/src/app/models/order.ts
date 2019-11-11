@@ -7,5 +7,5 @@ export interface Order {
     fecha?: Date;
     descuento?: string;
     observacion?: string;
-    medico_id?: number;
+    medico?: string;
 }
